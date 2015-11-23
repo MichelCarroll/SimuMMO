@@ -1,11 +1,17 @@
 
 
+import GameObject from './GameObject';
 import Container from './Container';
 
-export default class World {
+export default class World extends GameObject {
 
   constructor() {
-    this.locations = new Container();
+    super();
+    this.locations = new Container(this);
+  }
+
+  getContainer() {
+    return null;
   }
 
 }

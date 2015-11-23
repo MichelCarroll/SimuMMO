@@ -1,7 +1,8 @@
 
 import CommandQueue from './CommandQueue';
 import WorldGenerator from './Generator/WorldGenerator';
-import Agent from './Agent';
+import PlayerAgent from './Agent/PlayerAgent';
+import SpawnAgent from './Agent/SpawnAgent';
 
 export default class Game {
 
@@ -17,8 +18,15 @@ export default class Game {
 
   start() {
     let player = this.world.locations.oneOfType('town').beings.oneOfType('player');
-    let agent = new Agent(player, this.executeCommand.bind(this));
-    agent.takeTurn();
+    let playerAgent = new PlayerAgent(this.executeCommand.bind(this), player);
+
+    let spawner = this.world.locations.oneOfType('dungeon').immobiles.oneOfType('spawn');
+    let spawnAgent = new SpawnAgent(this.executeCommand.bind(this), spawner);
+
+    playerAgent.takeTurn();
+    spawnAgent.takeTurn();
+
+    console.log(require('util').inspect(this.world, true, 10))
   }
 
 }

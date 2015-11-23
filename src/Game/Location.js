@@ -7,8 +7,9 @@ export default class Location extends GameObject {
 
   constructor() {
     super();
-    this.beings = new Container();
-    this.adjacentLocations = new Container();
+    this.beings = new Container(this);
+    this.immobiles = new Container(this);
+    this.adjacentLocations = new Container(this, true);
   }
 
   getObjectTypes() {

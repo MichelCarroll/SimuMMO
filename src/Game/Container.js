@@ -2,11 +2,16 @@
 
 export default class Container {
 
-  constructor() {
+  constructor(container, isWeak) {
+    this.isWeak = !!isWeak;
+    this.container = container;
     this.contents = [];
   }
 
   add(object) {
+    if(!this.isWeak) {
+        object.setContainer(this.container);
+    }
     this.contents.push(object);
   }
 

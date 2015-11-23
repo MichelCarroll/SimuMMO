@@ -10,7 +10,7 @@ export default class KillCommand {
 
   execute() {
     this.player.giveMoney(this.monster.getRewardMoney());
-    this.monster.getLocation().beings.remove(this.monster);
+    this.monster.getContainer().beings.remove(this.monster);
   }
- 
+
 }
