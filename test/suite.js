@@ -1,6 +1,5 @@
 
-import WorldGenerator from '../game/Game/Generator/WorldGenerator'
+import Game from '../game/Game/Game.js'
 
 
-let world = (new WorldGenerator()).generate();
-console.log(world);
+let game = (new Game()).start();

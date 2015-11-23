@@ -20,4 +20,8 @@ export default class World {
     newLocation.addBeing(being);
   }
 
+  getLocations() {
+    return this.locations;
+  }
+
 }

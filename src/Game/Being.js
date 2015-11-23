@@ -16,4 +16,5 @@ export default class Being extends GameObject {
     this.location = location;
   }
 
+
 }

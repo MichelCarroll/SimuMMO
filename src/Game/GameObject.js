@@ -8,4 +8,8 @@ export default class GameObject {
     this.id = nextGlobalId++;
   }
 
+  getObjectType() {
+    return 'generic';
+  }
+
 }

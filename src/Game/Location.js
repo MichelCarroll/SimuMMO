@@ -16,4 +16,12 @@ export default class Location extends GameObject {
     this.beings.splice(this.beings.findIndex(function(being) { return targetBeing.id === being.id; }), 1);
   }
 
+  getBeings() {
+    return this.beings;
+  }
+  
+  getObjectType() {
+    return 'location';
+  }
+
 }
