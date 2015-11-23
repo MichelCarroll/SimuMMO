@@ -12,18 +12,18 @@ export default class WorldGenerator {
     let town = new Town();
     let player = new Player();
     player.setLocation(town);
-    town.addBeing(player);
+    town.beings.add(player);
 
     let dungeon = new Dungeon();
     let monster = new Monster();
     monster.setLocation(dungeon);
-    dungeon.addBeing(monster);
+    dungeon.beings.add(monster);
 
     let world = new World();
-    world.addLocation(dungeon);
-    world.addLocation(town);
-    town.addAdjacentLocation(dungeon);
-    dungeon.addAdjacentLocation(town);
+    world.locations.add(dungeon);
+    world.locations.add(town);
+    town.adjacentLocations.add(dungeon);
+    dungeon.adjacentLocations.add(town);
 
     return world;
   }

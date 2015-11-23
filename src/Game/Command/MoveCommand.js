@@ -9,12 +9,12 @@ export default class MoveCommand {
   }
 
   execute() {
-    let oldLocation = this.being.getLocation();
+    let oldLocation  = this.being.getLocation();
     if(oldLocation) {
-      oldLocation.removeBeing(this.being);
+      oldLocation.beings.remove(this.being);
     }
     this.being.setLocation(this.location);
-    this.location.addBeing(this.being);
+    this.location.beings.add(this.being);
   }
 
 }

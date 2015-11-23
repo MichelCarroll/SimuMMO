@@ -1,36 +1,18 @@
 
 import GameObject from './GameObject';
+import Container from './Container';
+
 
 export default class Location extends GameObject {
 
   constructor() {
     super();
-    this.beings = [];
-    this.adjacentLocations = [];
+    this.beings = new Container();
+    this.adjacentLocations = new Container();
   }
 
-  addAdjacentLocation(location) {
-    this.adjacentLocations.push(location);
-  }
-
-  getAdjacentLocations() {
-    return this.adjacentLocations;
-  }
-
-  addBeing(being) {
-    this.beings.push(being);
-  }
-
-  removeBeing(targetBeing) {
-    this.beings.splice(this.beings.findIndex(function(being) { return targetBeing.id === being.id; }), 1);
-  }
-
-  getBeings() {
-    return this.beings;
-  }
-
-  getObjectType() {
-    return 'location';
+  getObjectTypes() {
+    return super.getObjectTypes().concat(['location']);
   }
 
 }

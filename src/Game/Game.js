@@ -16,12 +16,9 @@ export default class Game {
   }
 
   start() {
-    let town = this.world.getLocations().find((location) => location.getObjectType() == 'town');
-    let player = town.getBeings().find((location) => location.getObjectType() == 'player');
+    let player = this.world.locations.oneOfType('town').beings.oneOfType('player');
     let agent = new Agent(player, this.executeCommand.bind(this));
-    console.log(player);
     agent.takeTurn();
-    console.log(player);
   }
 
 }

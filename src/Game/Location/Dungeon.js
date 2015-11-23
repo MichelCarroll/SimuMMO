@@ -2,9 +2,9 @@
 import Location from '../Location';
 
 export default class Dungeon extends Location{
-
-  getLocationType() {
-    return 'dungeon';
+  
+  getObjectTypes() {
+    return super.getObjectTypes().concat(['dungeon']);
   }
 
 }

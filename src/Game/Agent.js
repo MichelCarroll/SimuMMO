@@ -1,5 +1,6 @@
 
 import MoveCommand from './Command/MoveCommand';
+import KillCommand from './Command/KillCommand';
 
 export default class Agent {
 
@@ -9,8 +10,11 @@ export default class Agent {
   }
 
   takeTurn() {
-    let target = this.being.getLocation().getAdjacentLocations()[0];
-    this.commandCallback(new MoveCommand(this.being, target));
+    let targetLocation = this.being.getLocation().adjacentLocations.oneOfType('dungeon');
+    this.commandCallback(new MoveCommand(this.being, targetLocation));
+
+    let targetMonster = this.being.getLocation().beings.oneOfType('monster');
+    this.commandCallback(new KillCommand(this.being, targetMonster));
   }
 
 }

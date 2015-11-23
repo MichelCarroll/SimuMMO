@@ -3,8 +3,9 @@ import Location from '../Location';
 
 export default class Town extends Location {
 
-  getObjectType() {
-    return 'town';
+  getObjectTypes() {
+    return super.getObjectTypes().concat(['town']);
   }
+
 
 }
