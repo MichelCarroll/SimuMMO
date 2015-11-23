@@ -3,14 +3,18 @@
 
 export default class MoveCommand {
 
-  constructor(world, being, location) {
-    this.world = world;
+  constructor(being, location) {
     this.being = being;
     this.location = location;
   }
 
   execute() {
-    this.world.moveBeing(this.being, this.location);
+    let oldLocation = this.being.getLocation();
+    if(oldLocation) {
+      oldLocation.removeBeing(this.being);
+    }
+    this.being.setLocation(this.location);
+    this.location.addBeing(this.being);
   }
 
 }

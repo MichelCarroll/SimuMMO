@@ -1,4 +1,5 @@
 
+import MoveCommand from './Command/MoveCommand';
 
 export default class Agent {
 
@@ -8,7 +9,8 @@ export default class Agent {
   }
 
   takeTurn() {
-    
+    let target = this.being.getLocation().getAdjacentLocations()[0];
+    this.commandCallback(new MoveCommand(this.being, target));
   }
 
 }

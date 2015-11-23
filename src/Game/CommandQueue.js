@@ -12,7 +12,8 @@ export default class CommandQueue {
     }
 
     flush() {
-      while(nextCommand = this.nextCommand()) {
+      let nextCommand = null;
+      while(nextCommand = this.getNextCommand()) {
         nextCommand.execute();
       }
     }
@@ -21,6 +22,6 @@ export default class CommandQueue {
       if(this.queuePosition < this.commandQueue.length) {
         return this.commandQueue[this.queuePosition++];
       }
-    }    
+    }
 
 }

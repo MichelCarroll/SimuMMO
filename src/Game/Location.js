@@ -6,6 +6,15 @@ export default class Location extends GameObject {
   constructor() {
     super();
     this.beings = [];
+    this.adjacentLocations = [];
+  }
+
+  addAdjacentLocation(location) {
+    this.adjacentLocations.push(location);
+  }
+
+  getAdjacentLocations() {
+    return this.adjacentLocations;
   }
 
   addBeing(being) {
@@ -19,7 +28,7 @@ export default class Location extends GameObject {
   getBeings() {
     return this.beings;
   }
-  
+
   getObjectType() {
     return 'location';
   }

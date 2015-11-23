@@ -11,7 +11,7 @@ export default class Game {
   }
 
   executeCommand(command) {
-    this.commandQueue.push(command);
+    this.commandQueue.queue(command);
     this.commandQueue.flush();
   }
 
@@ -19,7 +19,9 @@ export default class Game {
     let town = this.world.getLocations().find((location) => location.getObjectType() == 'town');
     let player = town.getBeings().find((location) => location.getObjectType() == 'player');
     let agent = new Agent(player, this.executeCommand.bind(this));
+    console.log(player);
     agent.takeTurn();
+    console.log(player);
   }
 
 }

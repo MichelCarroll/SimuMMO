@@ -11,15 +11,6 @@ export default class World {
     this.locations.push(location);
   }
 
-  moveBeing(being, newLocation) {
-    let oldLocation = being.getLocation();
-    if(oldLocation) {
-      oldLocation.removeBeing(being);
-    }
-    being.setLocation(newLocation);
-    newLocation.addBeing(being);
-  }
-
   getLocations() {
     return this.locations;
   }
