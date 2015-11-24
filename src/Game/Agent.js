@@ -1,8 +1,7 @@
 
 export default class Agent {
 
-  constructor(commandCallback, target) {
-    this.commandCallback = commandCallback;
+  constructor(target) {
     this.target = target;
   }
 

@@ -4,8 +4,8 @@ import Agent from '../Agent';
 
 export default class SpawnAgent extends Agent {
 
-  takeTurn() {
-    this.commandCallback(new SpawnMonsterCommand(this.target));
+  takeTurn(commandCallback) {
+    commandCallback(new SpawnMonsterCommand(this.target));
   }
 
 }
