@@ -12,9 +12,9 @@ describe('lol', function() {
   });
 
   it('lol', function() {
-    game.run(10);
-    let player = game.world.locations.oneOfType('town').beings.oneOfType('player');
-    should(player.money).be.eql(5);
+    game.run(30);
+    // game.debug();
+    should(game.player.money).be.eql(4);
   });
 
 });

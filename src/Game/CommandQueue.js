@@ -24,4 +24,9 @@ export default class CommandQueue {
       }
     }
 
+    debug() {
+      this.commandQueue.forEach((cmd, i) => {
+        console.log(`#${i}: ${cmd.describe()}`);
+      });
+    }
 }

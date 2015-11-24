@@ -12,4 +12,7 @@ export default class SpawnMonsterCommand {
     this.spawner.getContainer().beings.add(monster);
   }
 
+  describe() {
+    return `Spawner #${this.spawner.id} spawned a monster`;
+  }
 }

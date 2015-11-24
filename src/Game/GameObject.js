@@ -20,4 +20,8 @@ export default class GameObject {
     return [];
   }
 
+  isA(type) {
+    return this.getObjectTypes().indexOf(type) !== -1;
+  }
+
 }

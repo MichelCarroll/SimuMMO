@@ -13,4 +13,7 @@ export default class MoveCommand {
     this.location.beings.add(this.being);
   }
 
+  describe() {
+    return `Being #${this.being.id} moved to #${this.location.id}`;
+  }
 }

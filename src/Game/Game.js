@@ -11,6 +11,8 @@ export default class Game {
     this.commandQueue = new CommandQueue();
     this.world = (new WorldGenerator()).generate();
     this.scheduler = new Scheduler(this.executeCommand.bind(this));
+
+    this.player = this.world.locations.oneOfType('town').beings.oneOfType('player');
   }
 
   executeCommand(command) {
@@ -19,9 +21,7 @@ export default class Game {
   }
 
   initiate() {
-    this.scheduler.add(new PlayerAgent(
-      this.world.locations.oneOfType('town').beings.oneOfType('player')
-    ));
+    this.scheduler.add(new PlayerAgent(this.player));
     this.scheduler.add(new SpawnAgent(
       this.world.locations.oneOfType('dungeon').immobiles.oneOfType('spawn')
     ));
@@ -34,6 +34,7 @@ export default class Game {
   }
 
   debug() {
-    console.log(require('util').inspect(this.world, true, 10))
+    // console.log(require('util').inspect(this.world, true, 10))
+    this.commandQueue.debug();
   }
 }

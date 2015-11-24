@@ -24,7 +24,7 @@ export default class Container {
   }
 
   oneOfType(type) {
-    return this.contents.find((object) => object.getObjectTypes().indexOf(type) !== -1);
+    return this.contents.find((object) => object.isA(type));
   }
 
 }
