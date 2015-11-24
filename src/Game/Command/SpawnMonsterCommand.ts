@@ -1,9 +1,12 @@
 
 import MonsterGenerator from '../Generator/MonsterGenerator'
+import MonsterSpawn from '../MonsterSpawn';
 
 export default class SpawnMonsterCommand {
 
-  constructor(spawner) {
+  spawner:MonsterSpawn;
+
+  constructor(spawner:MonsterSpawn) {
     this.spawner = spawner;
   }
 

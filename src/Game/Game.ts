@@ -4,18 +4,26 @@ import Scheduler from './Scheduler';
 import WorldGenerator from './Generator/WorldGenerator';
 import PlayerAgent from './Agent/PlayerAgent';
 import SpawnAgent from './Agent/SpawnAgent';
+import World from './World';
+import {Command} from './Command';
+import Player from './Being/Player';
 
 export default class Game {
 
+  commandQueue:CommandQueue;
+  world:World;
+  scheduler:Scheduler;
+  player:Player;
+
   constructor() {
     this.commandQueue = new CommandQueue();
-    this.world = (new WorldGenerator()).generate();
+    this.world = (new WorldGenerator()).generate();CommandQueue;
     this.scheduler = new Scheduler(this.executeCommand.bind(this));
 
     this.player = this.world.locations.oneOfType('town').beings.oneOfType('player');
   }
 
-  executeCommand(command) {
+  executeCommand(command:Command) {
     this.commandQueue.queue(command);
     this.commandQueue.flush();
   }
@@ -27,7 +35,7 @@ export default class Game {
     ));
   }
 
-  run(numTurns) {
+  run(numTurns:number) {
     for(let x = 0; x < numTurns; x++) {
         this.scheduler.nextTurn();
     }

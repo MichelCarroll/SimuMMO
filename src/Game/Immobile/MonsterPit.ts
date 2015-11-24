@@ -7,4 +7,4 @@ export default class MonsterPit extends MonsterSpawn {
     return super.getObjectTypes().concat(['spawn']);
   }
 
-}
+}  

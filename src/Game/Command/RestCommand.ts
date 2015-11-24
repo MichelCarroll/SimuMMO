@@ -1,9 +1,11 @@
 
-
+import Player from '../Being/Player';
 
 export default class RestCommand {
 
-  constructor(player) {
+  player:Player;
+
+  constructor(player:Player) {
     this.player = player;
   }
 

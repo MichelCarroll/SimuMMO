@@ -1,18 +1,22 @@
 
+import {Command} from './Command';
 
 export default class CommandQueue {
+
+    queuePosition:number;
+    commandQueue:Command[];
 
     constructor() {
       this.queuePosition = 0;
       this.commandQueue = [];
     }
 
-    queue(command) {
+    queue(command:Command) {
       this.commandQueue.push(command);
     }
 
     flush() {
-      let nextCommand = null;
+      let nextCommand:Command;
       while(nextCommand = this.getNextCommand()) {
         nextCommand.execute();
       }

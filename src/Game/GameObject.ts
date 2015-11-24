@@ -4,23 +4,26 @@ let nextGlobalId = 1;
 
 export default class GameObject {
 
+  id:number;
+  container:GameObject;
+
   constructor() {
     this.id = nextGlobalId++;
   }
 
-  getContainer() {
+  getContainer():any {
     return this.container;
   }
 
-  setContainer(container) {
+  setContainer(container:GameObject) {
     this.container = container;
   }
 
-  getObjectTypes() {
+  getObjectTypes():string[] {
     return [];
   }
 
-  isA(type) {
+  isA(type:string) {
     return this.getObjectTypes().indexOf(type) !== -1;
   }
 

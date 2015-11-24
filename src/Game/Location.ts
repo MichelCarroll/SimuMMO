@@ -5,6 +5,10 @@ import Container from './Container';
 
 export default class Location extends GameObject {
 
+  beings:Container;
+  immobiles:Container;
+  adjacentLocations:Container;
+
   constructor() {
     super();
     this.beings = new Container(this);

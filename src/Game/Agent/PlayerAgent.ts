@@ -1,12 +1,14 @@
 
+import {Command} from '../Command';
 import MoveCommand from '../Command/MoveCommand';
 import KillCommand from '../Command/KillCommand';
 import RestCommand from '../Command/RestCommand';
 import Agent from '../Agent';
+import Player from '../Being/Player';
 
 export default class PlayerAgent extends Agent {
 
-  takeTurn(commandCallback) {
+  takeTurn(commandCallback:(cmd:Command)=>void) {
     if(this.target.getContainer().isA('town')) {
       if(this.target.isInjured()) {
         commandCallback(new RestCommand(this.target));
@@ -24,6 +26,6 @@ export default class PlayerAgent extends Agent {
         commandCallback(new KillCommand(this.target, targetMonster));
       }
     }
+    return 0;
   }
-
 }

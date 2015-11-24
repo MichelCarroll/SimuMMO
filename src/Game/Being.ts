@@ -1,18 +1,21 @@
 
 import GameObject from './GameObject';
+import Location from './Location';
 
 
 export default class Being extends GameObject {
+
+  location:Location;
 
   constructor() {
     super();
   }
 
-  getLocation() {
+  getLocation():Location {
     return this.location;
   }
 
-  setLocation(location) {
+  setLocation(location:Location) {
     this.location = location;
   }
 

@@ -1,9 +1,14 @@
 
+import {Command} from '../Command';
+import Player from '../Being/Player';
+import Monster from '../Being/Monster';
 
+export default class KillCommand implements Command {
 
-export default class KillCommand {
+  player:Player;
+  monster:Monster;
 
-  constructor(player, monster) {
+  constructor(player:Player, monster:Monster) {
     this.player = player;
     this.monster = monster;
   }

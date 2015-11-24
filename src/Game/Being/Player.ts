@@ -3,6 +3,9 @@ import Being from '../Being';
 
 export default class Player extends Being {
 
+  money:number;
+  isHurt:boolean;
+
   constructor() {
     super();
     this.money = 0;
@@ -21,7 +24,7 @@ export default class Player extends Being {
     return this.isHurt;
   }
 
-  giveMoney(quantity) {
+  giveMoney(quantity:number) {
     this.money += quantity;
   }
 

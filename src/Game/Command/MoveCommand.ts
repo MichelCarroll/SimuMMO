@@ -1,9 +1,13 @@
 
-
+import Being from '../Being';
+import Location from '../Location';
 
 export default class MoveCommand {
 
-  constructor(being, location) {
+  being:Being;
+  location:Location;
+
+  constructor(being:Being, location:Location) {
     this.being = being;
     this.location = location;
   }
