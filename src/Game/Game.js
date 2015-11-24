@@ -27,8 +27,10 @@ export default class Game {
     ));
   }
 
-  run() {
-    this.scheduler.nextTurn();
+  run(numTurns) {
+    for(let x = 0; x < numTurns; x++) {
+        this.scheduler.nextTurn();
+    }
   }
 
   debug() {
