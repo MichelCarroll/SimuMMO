@@ -5,14 +5,12 @@ import Container from './Container';
 
 export default class Location extends GameObject {
 
-  beings:Container;
-  immobiles:Container;
+  contents:Container;
   adjacentLocations:Container;
 
   constructor() {
     super();
-    this.beings = new Container(this);
-    this.immobiles = new Container(this);
+    this.contents = new Container(this);
     this.adjacentLocations = new Container(this, true);
   }
 

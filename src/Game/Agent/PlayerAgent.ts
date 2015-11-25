@@ -12,7 +12,7 @@ export default class PlayerAgent extends Agent {
   getCommand():Command {
     let isInTown = this.target.getContainer().isA('town');
     let isInjured = this.target.isInjured();
-    let monsterIsPresent = !!this.target.getContainer().beings.oneOfType('monster');
+    let monsterIsPresent = !!this.target.getContainer().contents.oneOfType('monster');
 
     if(isInjured && !isInTown)
     {
@@ -35,7 +35,7 @@ export default class PlayerAgent extends Agent {
     else if(monsterIsPresent) {
       return new KillCommand(
         this.target,
-        this.target.getContainer().beings.oneOfType('monster')
+        this.target.getContainer().contents.oneOfType('monster')
       );
     }
     else if(!monsterIsPresent) {

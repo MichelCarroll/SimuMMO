@@ -17,7 +17,7 @@ export default class Game {
     this.commandQueue = new CommandQueue();
     this.scheduler = new Scheduler(this.executeCommand.bind(this));
     this.world = (new WorldGenerator()).generate(this.scheduler);
-    this.player = this.world.locations.oneOfType('town').beings.oneOfType('player');
+    this.player = this.world.locations.oneOfType('town').contents.oneOfType('player');
   }
 
   executeCommand(command:Command) {

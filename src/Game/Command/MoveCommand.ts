@@ -13,8 +13,8 @@ export default class MoveCommand {
   }
 
   execute() {
-    this.being.getContainer().beings.remove(this.being);
-    this.location.beings.add(this.being);
+    this.being.getContainer().contents.remove(this.being);
+    this.location.contents.add(this.being);
   }
 
   describe() {

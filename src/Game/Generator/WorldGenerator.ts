@@ -15,14 +15,14 @@ export default class WorldGenerator {
   generate(scheduler:Scheduler) {
     let town = new Town();
     let player = new Player();
-    town.beings.add(player);
+    town.contents.add(player);
     scheduler.add(new PlayerAgent(player));
 
     let dungeon = new Dungeon();
     let monster = new Monster();
     let spawn = new MonsterPit();
-    dungeon.beings.add(monster);
-    dungeon.immobiles.add(spawn);
+    dungeon.contents.add(monster);
+    dungeon.contents.add(spawn);
     scheduler.add(new SpawnAgent(spawn));
 
     let world = new World();
