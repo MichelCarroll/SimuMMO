@@ -10,7 +10,7 @@ export default class RestCommand {
   }
 
   execute() {
-    this.player.rest();
+    this.player.rest(10);
   }
 
   describe() {

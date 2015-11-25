@@ -9,7 +9,7 @@ export default class Being extends GameObject {
 
   constructor() {
     super();
-  }
+  } 
 
   getLocation():Location {
     return this.location;

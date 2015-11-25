@@ -36,8 +36,16 @@ export default class Game {
   }
 
   run(numTurns:number) {
-    for(let x = 0; x < numTurns; x++) {
-        this.scheduler.nextTurn();
+    let tries = 0;
+    let turns = 0;
+
+    while(tries++ < 10 && turns < numTurns) {
+        if(this.scheduler.nextTurn()) {
+          turns++;
+          tries = 0;
+        } else {
+          tries++;
+        }
     }
   }
 

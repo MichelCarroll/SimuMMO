@@ -12,10 +12,12 @@ export default class Agent {
     this.target = target;
   }
 
-  processTurn(commandCallback:(cmd:Command)=>void) {
+  processTurn(commandCallback:(cmd:Command)=>void):boolean {
     if(!this.turnsToWait--) {
       this.turnsToWait = this.takeTurn(commandCallback);
+      return true;
     }
+    return false;
   }
 
   takeTurn(commandCallback:(cmd:Command)=>void) {

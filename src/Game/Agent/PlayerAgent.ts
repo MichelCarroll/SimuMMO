@@ -9,23 +9,44 @@ import Player from '../Being/Player';
 export default class PlayerAgent extends Agent {
 
   takeTurn(commandCallback:(cmd:Command)=>void) {
-    if(this.target.getContainer().isA('town')) {
-      if(this.target.isInjured()) {
-        commandCallback(new RestCommand(this.target));
-      } else {
-        let targetLocation = this.target.getContainer().adjacentLocations.oneOfType('dungeon');
-        commandCallback(new MoveCommand(this.target, targetLocation));
-      }
+    let isInTown = this.target.getContainer().isA('town');
+    let isInjured = this.target.isInjured();
+    let monsterIsPresent = !!this.target.getContainer().beings.oneOfType('monster');
+
+    if(isInjured && !isInTown)
+    {
+      commandCallback(new MoveCommand(
+        this.target,
+        this.target.getContainer().adjacentLocations.oneOfType('town')
+      ));
+    }
+    else if(isInjured && isInTown)
+    {
+      commandCallback(new RestCommand(this.target));
+    }
+    else if(isInTown)
+    {
+      commandCallback(new MoveCommand(
+        this.target,
+        this.target.getContainer().adjacentLocations.oneOfType('dungeon')
+      ));
+    }
+    else if(monsterIsPresent) {
+      commandCallback(new KillCommand(
+        this.target,
+        this.target.getContainer().beings.oneOfType('monster')
+      ));
+    }
+    else if(!monsterIsPresent) {
+      commandCallback(new MoveCommand(
+        this.target,
+        this.target.getContainer().adjacentLocations.oneOfType('town')
+      ));
     }
     else {
-      if(this.target.isInjured()) {
-        let targetLocation = this.target.getContainer().adjacentLocations.oneOfType('town');
-        commandCallback(new MoveCommand(this.target, targetLocation));
-      } else {
-        let targetMonster = this.target.getContainer().beings.oneOfType('monster');
-        commandCallback(new KillCommand(this.target, targetMonster));
-      }
+      commandCallback(new RestCommand(this.target));
     }
+
     return 0;
   }
 }

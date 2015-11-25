@@ -23,15 +23,16 @@ export default class Scheduler {
     }
   }
 
-  nextTurn() {
+  nextTurn():boolean {
     if(!this.agents.length) {
-      return;
+      return false;
     }
 
-    this.agents[this.position++].processTurn(this.executeCommand);
+    let agent = this.agents[this.position++];
     if(this.position >= this.agents.length) {
       this.position = 0;
     }
+    return agent.processTurn(this.executeCommand);
   }
 
 }

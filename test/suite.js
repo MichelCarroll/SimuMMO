@@ -14,7 +14,7 @@ describe('lol', function() {
   it('lol', function() {
     game.run(30);
     // game.debug();
-    should(game.player.money).be.eql(4);
+    should(game.player.money).be.eql(6);
   });
 
 });

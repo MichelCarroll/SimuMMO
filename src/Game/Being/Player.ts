@@ -3,25 +3,26 @@ import Being from '../Being';
 
 export default class Player extends Being {
 
+  health:number;
   money:number;
   isHurt:boolean;
 
   constructor() {
     super();
     this.money = 0;
-    this.isHurt = false;
+    this.health = 100;
   }
 
-  rest() {
-    this.isHurt = false;
+  rest(points:number) {
+    this.health += points;
   }
 
-  injure() {
-    this.isHurt = true;
+  injure(points:number) {
+    this.health -= points;
   }
 
-  isInjured() {
-    return this.isHurt;
+  isInjured():boolean {
+    return this.health < 50;
   }
 
   giveMoney(quantity:number) {
