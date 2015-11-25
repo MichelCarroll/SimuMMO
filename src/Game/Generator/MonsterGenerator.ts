@@ -8,7 +8,7 @@ export default class MonsterGenerator {
   generate() {
     let monster = new Being(['monster']);
     monster.getInventory().giveMoney(1);
-    monster.add(new WoodenStick(['stick']));
+    monster.add(new WoodenStick(5));
     return monster;
   }
 

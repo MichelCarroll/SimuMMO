@@ -8,7 +8,7 @@ export default class WaitCommand implements Command {
   }
 
   describe() {
-    return `Waiting`;
+    return ``;
   }
 
   getTurnCooldown():number {

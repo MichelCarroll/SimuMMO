@@ -47,6 +47,10 @@ export default class Container {
     otherContainer.empty();
   }
 
+  allOfType(type:string):any {
+    return this.contents.filter((object:GameObject) => object.isA(type));
+  }
+
   oneOfType(type:string):any {
     return this.contents.find((object:GameObject) => object.isA(type));
   }

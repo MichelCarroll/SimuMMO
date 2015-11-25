@@ -14,8 +14,11 @@ export default class WorldGenerator {
   generate(scheduler:Scheduler) {
     let town = new Location(['town']);
     let player = new Being(['player']);
+    let shopkeep = new Being(['shopkeep']);
     town.add(player);
+    town.add(shopkeep);
     scheduler.add(new PlayerAgent(player));
+
 
     let dungeon = new Location(['dungeon']);
     let monster = (new MonsterGenerator()).generate();

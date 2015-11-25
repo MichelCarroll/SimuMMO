@@ -7,6 +7,7 @@ import MoveCommand from '../Command/MoveCommand';
 import KillCommand from '../Command/KillCommand';
 import RestCommand from '../Command/RestCommand';
 import WaitCommand from '../Command/WaitCommand';
+import SellLootCommand from '../Command/SellLootCommand';
 import Agent from '../Agent';
 import Being from '../Being';
 
@@ -16,6 +17,8 @@ export default class PlayerAgent extends Agent {
     let isInTown = this.target.getParent().isA('town');
     let isInjured = this.target.isInjured();
     let monsterIsPresent = !!this.target.getParent().oneOfType('monster');
+    let hasLoot = !!this.target.oneOfType('item');
+    let shopkeepIsAround = !!this.target.getParent().oneOfType('shopkeep');
 
     if(isInjured && !isInTown)
     {
@@ -27,6 +30,13 @@ export default class PlayerAgent extends Agent {
     else if(isInjured && isInTown)
     {
       return new RestCommand(this.target);
+    }
+    else if(isInTown && hasLoot && shopkeepIsAround)
+    {
+      return new SellLootCommand(
+        this.target,
+        this.target.getParent().oneOfType('shopkeep')
+      );
     }
     else if(isInTown)
     {

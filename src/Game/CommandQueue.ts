@@ -30,7 +30,10 @@ export default class CommandQueue {
 
     debug() {
       this.commandQueue.forEach((cmd, i) => {
-        console.log(`#${i}: ${cmd.describe()}`);
+        let description = cmd.describe();
+        if(description) {
+           console.log(`#${i}: ${description}`);
+        }
       });
     }
 }
