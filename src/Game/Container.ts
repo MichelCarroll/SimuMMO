@@ -21,7 +21,7 @@ export default class Container {
   }
 
   getParent():any {
-    return this.parent; 
+    return this.parent;
   }
 
   setParent(container:Container) {
@@ -34,6 +34,17 @@ export default class Container {
 
   all():Container[] {
     return this.contents;
+  }
+
+  empty() {
+    this.contents = [];
+  }
+
+  takeAll(otherContainer:Container) {
+    otherContainer.all().forEach((go:GameObject) => {
+      this.add(go);
+    });
+    otherContainer.empty();
   }
 
   oneOfType(type:string):any {

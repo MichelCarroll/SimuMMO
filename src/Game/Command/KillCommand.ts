@@ -15,6 +15,7 @@ export default class KillCommand implements Command {
   execute() {
     this.self.injure(10);
     this.self.getInventory().giveMoney(this.target.getInventory().getMoney());
+    this.self.takeAll(this.target);
     this.target.getParent().remove(this.target);
   }
 
