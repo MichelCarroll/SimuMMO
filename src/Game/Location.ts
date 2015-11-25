@@ -1,15 +1,15 @@
 
 import GameObject from './GameObject';
-import Container from './Container';
+import Referencer from './Referencer';
 
 
 export default class Location extends GameObject {
 
-  adjacentLocations:Container;
+  adjacentLocations:GameObject;
 
   constructor(types:string[]) {
     super(types);
-    this.adjacentLocations = new Container();
+    this.adjacentLocations = new Referencer();
   }
 
 }
