@@ -9,6 +9,7 @@ import World from '../World'
 import Scheduler from '../Scheduler';
 import PlayerAgent from '../Agent/PlayerAgent';
 import SpawnAgent from '../Agent/SpawnAgent';
+import MonsterGenerator from './MonsterGenerator';
 
 export default class WorldGenerator {
 
@@ -19,7 +20,7 @@ export default class WorldGenerator {
     scheduler.add(new PlayerAgent(player));
 
     let dungeon = new Dungeon();
-    let monster = new Monster();
+    let monster = (new MonsterGenerator()).generate();
     let spawn = new MonsterPit();
     dungeon.contents.add(monster);
     dungeon.contents.add(spawn);

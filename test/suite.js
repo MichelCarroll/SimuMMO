@@ -13,7 +13,7 @@ describe('lol', function() {
   it('lol', function() {
     game.run(100);
     // game.debug();
-    should(game.player.money).be.eql(13);
+    should(game.player.getInventory().money).be.eql(13);
   });
 
 });

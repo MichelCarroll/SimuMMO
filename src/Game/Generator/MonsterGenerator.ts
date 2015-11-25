@@ -5,7 +5,9 @@ import Monster from '../Being/Monster'
 export default class MonsterGenerator {
 
   generate() {
-    return new Monster();
+    let monster = new Monster();
+    monster.getInventory().giveMoney(1);
+    return monster;
   }
 
 }

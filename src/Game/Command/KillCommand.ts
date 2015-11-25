@@ -15,7 +15,7 @@ export default class KillCommand implements Command {
 
   execute() {
     this.player.injure(10);
-    this.player.giveMoney(this.monster.getRewardMoney());
+    this.player.getInventory().giveMoney(this.monster.getInventory().getMoney());
     this.monster.getContainer().contents.remove(this.monster);
   }
 
