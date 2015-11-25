@@ -8,7 +8,6 @@ describe('lol', function() {
 
   beforeEach(function(){
     game = new Game();
-    game.initiate();
   });
 
   it('lol', function() {

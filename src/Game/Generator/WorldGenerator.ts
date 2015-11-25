@@ -6,19 +6,24 @@ import MonsterPit from '../Immobile/MonsterPit';
 import Dungeon from '../Location/Dungeon'
 import Town from '../Location/Town'
 import World from '../World'
+import Scheduler from '../Scheduler';
+import PlayerAgent from '../Agent/PlayerAgent';
+import SpawnAgent from '../Agent/SpawnAgent';
 
 export default class WorldGenerator {
 
-  generate() {
+  generate(scheduler:Scheduler) {
     let town = new Town();
     let player = new Player();
     town.beings.add(player);
+    scheduler.add(new PlayerAgent(player));
 
     let dungeon = new Dungeon();
     let monster = new Monster();
     let spawn = new MonsterPit();
     dungeon.beings.add(monster);
     dungeon.immobiles.add(spawn);
+    scheduler.add(new SpawnAgent(spawn));
 
     let world = new World();
     world.locations.add(dungeon);

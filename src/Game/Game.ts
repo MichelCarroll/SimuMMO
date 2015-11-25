@@ -2,8 +2,6 @@
 import CommandQueue from './CommandQueue';
 import Scheduler from './Scheduler';
 import WorldGenerator from './Generator/WorldGenerator';
-import PlayerAgent from './Agent/PlayerAgent';
-import SpawnAgent from './Agent/SpawnAgent';
 import World from './World';
 import {Command} from './Command';
 import Player from './Being/Player';
@@ -17,22 +15,14 @@ export default class Game {
 
   constructor() {
     this.commandQueue = new CommandQueue();
-    this.world = (new WorldGenerator()).generate();CommandQueue;
     this.scheduler = new Scheduler(this.executeCommand.bind(this));
-
+    this.world = (new WorldGenerator()).generate(this.scheduler);
     this.player = this.world.locations.oneOfType('town').beings.oneOfType('player');
   }
 
   executeCommand(command:Command) {
     this.commandQueue.queue(command);
     this.commandQueue.flush();
-  }
-
-  initiate() {
-    this.scheduler.add(new PlayerAgent(this.player));
-    this.scheduler.add(new SpawnAgent(
-      this.world.locations.oneOfType('dungeon').immobiles.oneOfType('spawn')
-    ));
   }
 
   run(numTurns:number) {
