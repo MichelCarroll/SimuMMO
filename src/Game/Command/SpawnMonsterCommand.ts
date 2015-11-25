@@ -18,4 +18,8 @@ export default class SpawnMonsterCommand {
   describe() {
     return `Spawner #${this.spawner.id} spawned a monster`;
   }
+
+  getTurnCooldown():number {
+    return 4;
+  }
 }

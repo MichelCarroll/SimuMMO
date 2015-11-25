@@ -1,7 +1,8 @@
 
 import Player from '../Being/Player';
+import {Command} from '../Command';
 
-export default class RestCommand {
+export default class RestCommand implements Command {
 
   player:Player;
 
@@ -15,6 +16,10 @@ export default class RestCommand {
 
   describe() {
     return `Player #${this.player.id} rested`;
+  }
+
+  getTurnCooldown():number {
+    return 0;
   }
 
 }

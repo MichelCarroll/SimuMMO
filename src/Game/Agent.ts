@@ -1,6 +1,7 @@
 
 import GameObject from './GameObject';
 import {Command} from './Command';
+import WaitCommand from './Command/WaitCommand';
 
 export default class Agent {
 
@@ -12,12 +13,18 @@ export default class Agent {
     this.target = target;
   }
 
-  processTurn(commandCallback:(cmd:Command)=>void):boolean {
-    if(!this.turnsToWait--) {
-      this.turnsToWait = this.takeTurn(commandCallback);
-      return true;
+  getCommand():Command {
+    return new WaitCommand();
+  }
+
+  processTurn():Command {
+    if(this.turnsToWait-- > 0) {
+      return new WaitCommand();
     }
-    return false;
+
+    let command = this.getCommand();
+    this.turnsToWait += command.getTurnCooldown();
+    return command;
   }
 
   takeTurn(commandCallback:(cmd:Command)=>void) {

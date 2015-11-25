@@ -11,9 +11,9 @@ describe('lol', function() {
   });
 
   it('lol', function() {
-    game.run(30);
+    game.run(100);
     // game.debug();
-    should(game.player.money).be.eql(6);
+    should(game.player.money).be.eql(13);
   });
 
 });

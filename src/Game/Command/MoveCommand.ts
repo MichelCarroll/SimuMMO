@@ -20,4 +20,8 @@ export default class MoveCommand {
   describe() {
     return `Being #${this.being.id} moved to #${this.location.id}`;
   }
+
+  getTurnCooldown():number {
+    return 0;
+  }
 }

@@ -23,4 +23,8 @@ export default class KillCommand implements Command {
     return `Player #${this.player.id} killed Monster #${this.monster.id}`;
   }
 
+  getTurnCooldown():number {
+    return 0;
+  }
+
 }
