@@ -12,7 +12,7 @@ export default class SpawnMonsterCommand {
 
   execute() {
     let monster = (new MonsterGenerator()).generate();
-    this.spawner.getContainer().contents.add(monster);
+    this.spawner.getParent().add(monster);
   }
 
   describe() {

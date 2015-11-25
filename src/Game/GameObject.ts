@@ -1,25 +1,18 @@
 
+import Container from './Container';
 
 let nextGlobalId = 1;
 
-export default class GameObject {
+export default class GameObject extends Container {
 
   id:number;
   types:string[];
-  container:GameObject;
 
   constructor(types?:string[]) {
+    super();
     this.id = nextGlobalId++;
     this.types = types || [];
   }
-
-  getContainer():any {
-    return this.container;
-  }
-
-  setContainer(container:GameObject) {
-    this.container = container;
-  } 
 
   getObjectTypes():string[] {
     return this.types;

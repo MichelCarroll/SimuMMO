@@ -2,8 +2,7 @@
 
 import Being from '../Being';
 import MonsterPit from '../Immobile/MonsterPit';
-import Dungeon from '../Location/Dungeon'
-import Town from '../Location/Town'
+import Location from '../Location'
 import World from '../World'
 import Scheduler from '../Scheduler';
 import PlayerAgent from '../Agent/PlayerAgent';
@@ -13,21 +12,21 @@ import MonsterGenerator from './MonsterGenerator';
 export default class WorldGenerator {
 
   generate(scheduler:Scheduler) {
-    let town = new Town();
+    let town = new Location(['town']);
     let player = new Being(['player']);
-    town.contents.add(player);
+    town.add(player);
     scheduler.add(new PlayerAgent(player));
 
-    let dungeon = new Dungeon();
+    let dungeon = new Location(['dungeon']);
     let monster = (new MonsterGenerator()).generate();
     let spawn = new MonsterPit();
-    dungeon.contents.add(monster);
-    dungeon.contents.add(spawn);
+    dungeon.add(monster);
+    dungeon.add(spawn);
     scheduler.add(new SpawnAgent(spawn));
 
     let world = new World();
-    world.locations.add(dungeon);
-    world.locations.add(town);
+    world.add(dungeon);
+    world.add(town);
     town.adjacentLocations.add(dungeon);
     dungeon.adjacentLocations.add(town);
 

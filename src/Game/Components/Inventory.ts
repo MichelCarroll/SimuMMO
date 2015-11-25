@@ -4,11 +4,9 @@ import Item from '../Item';
 export default class Inventory {
 
   money:number;
-  objects:Item[];
 
   constructor() {
     this.money = 0;
-    this.objects = [];
   }
 
   giveMoney(quantity:number) {
@@ -21,5 +19,10 @@ export default class Inventory {
 
   getMoney():number {
     return this.money;
+  }
+
+  transferTo(inventory:Inventory) {
+    this.giveMoney(inventory.getMoney());
+    inventory.takeMoney(inventory.getMoney());
   }
 }

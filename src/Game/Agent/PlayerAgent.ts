@@ -1,4 +1,7 @@
 
+
+declare function require(str:string):any;
+
 import {Command} from '../Command';
 import MoveCommand from '../Command/MoveCommand';
 import KillCommand from '../Command/KillCommand';
@@ -10,15 +13,15 @@ import Being from '../Being';
 export default class PlayerAgent extends Agent {
 
   getCommand():Command {
-    let isInTown = this.target.getContainer().isA('town');
+    let isInTown = this.target.getParent().isA('town');
     let isInjured = this.target.isInjured();
-    let monsterIsPresent = !!this.target.getContainer().contents.oneOfType('monster');
+    let monsterIsPresent = !!this.target.getParent().oneOfType('monster');
 
     if(isInjured && !isInTown)
     {
       return new MoveCommand(
         this.target,
-        this.target.getContainer().adjacentLocations.oneOfType('town')
+        this.target.getParent().adjacentLocations.oneOfType('town')
       );
     }
     else if(isInjured && isInTown)
@@ -29,19 +32,19 @@ export default class PlayerAgent extends Agent {
     {
       return new MoveCommand(
         this.target,
-        this.target.getContainer().adjacentLocations.oneOfType('dungeon')
+        this.target.getParent().adjacentLocations.oneOfType('dungeon')
       );
     }
     else if(monsterIsPresent) {
       return new KillCommand(
         this.target,
-        this.target.getContainer().contents.oneOfType('monster')
+        this.target.getParent().oneOfType('monster')
       );
     }
     else if(!monsterIsPresent) {
       return new MoveCommand(
         this.target,
-        this.target.getContainer().adjacentLocations.oneOfType('town')
+        this.target.getParent().adjacentLocations.oneOfType('town')
       );
     }
 
