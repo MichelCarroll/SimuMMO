@@ -5,7 +5,7 @@ import KillCommand from '../Command/KillCommand';
 import RestCommand from '../Command/RestCommand';
 import WaitCommand from '../Command/WaitCommand';
 import Agent from '../Agent';
-import Player from '../Being/Player';
+import Being from '../Being';
 
 export default class PlayerAgent extends Agent {
 

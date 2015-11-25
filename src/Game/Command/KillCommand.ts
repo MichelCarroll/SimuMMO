@@ -1,26 +1,25 @@
 
 import {Command} from '../Command';
-import Player from '../Being/Player';
-import Monster from '../Being/Monster';
+import Being from '../Being';
 
 export default class KillCommand implements Command {
 
-  player:Player;
-  monster:Monster;
+  self:Being;
+  target:Being;
 
-  constructor(player:Player, monster:Monster) {
-    this.player = player;
-    this.monster = monster;
+  constructor(self:Being, target:Being) {
+    this.self = self;
+    this.target = target;
   }
 
   execute() {
-    this.player.injure(10);
-    this.player.getInventory().giveMoney(this.monster.getInventory().getMoney());
-    this.monster.getContainer().contents.remove(this.monster);
+    this.self.injure(10);
+    this.self.getInventory().giveMoney(this.target.getInventory().getMoney());
+    this.target.getContainer().contents.remove(this.target);
   }
 
   describe() {
-    return `Player #${this.player.id} killed Monster #${this.monster.id}`;
+    return `Player #${this.self.id} killed Monster #${this.target.id}`;
   }
 
   getTurnCooldown():number {

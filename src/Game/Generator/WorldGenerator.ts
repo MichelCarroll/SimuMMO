@@ -1,7 +1,6 @@
 
 
-import Player from '../Being/Player'
-import Monster from '../Being/Monster'
+import Being from '../Being';
 import MonsterPit from '../Immobile/MonsterPit';
 import Dungeon from '../Location/Dungeon'
 import Town from '../Location/Town'
@@ -15,7 +14,7 @@ export default class WorldGenerator {
 
   generate(scheduler:Scheduler) {
     let town = new Town();
-    let player = new Player();
+    let player = new Being(['player']);
     town.contents.add(player);
     scheduler.add(new PlayerAgent(player));
 

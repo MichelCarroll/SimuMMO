@@ -5,10 +5,12 @@ let nextGlobalId = 1;
 export default class GameObject {
 
   id:number;
+  types:string[];
   container:GameObject;
 
-  constructor() {
+  constructor(types?:string[]) {
     this.id = nextGlobalId++;
+    this.types = types || [];
   }
 
   getContainer():any {
@@ -17,10 +19,10 @@ export default class GameObject {
 
   setContainer(container:GameObject) {
     this.container = container;
-  }
+  } 
 
   getObjectTypes():string[] {
-    return [];
+    return this.types;
   }
 
   isA(type:string) {

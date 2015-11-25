@@ -4,14 +4,14 @@ import Scheduler from './Scheduler';
 import WorldGenerator from './Generator/WorldGenerator';
 import World from './World';
 import {Command} from './Command';
-import Player from './Being/Player';
+import Being from './Being';
 
 export default class Game {
 
   commandQueue:CommandQueue;
   world:World;
   scheduler:Scheduler;
-  player:Player;
+  player:Being;
 
   constructor() {
     this.commandQueue = new CommandQueue();

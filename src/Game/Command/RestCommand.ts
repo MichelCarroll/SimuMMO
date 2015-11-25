@@ -1,21 +1,21 @@
 
-import Player from '../Being/Player';
+import Being from '../Being';
 import {Command} from '../Command';
 
 export default class RestCommand implements Command {
 
-  player:Player;
+  self:Being;
 
-  constructor(player:Player) {
-    this.player = player;
+  constructor(self:Being) {
+    this.self = self;
   }
 
   execute() {
-    this.player.rest(10);
+    this.self.rest(10);
   }
 
   describe() {
-    return `Player #${this.player.id} rested`;
+    return `Player #${this.self.id} rested`;
   }
 
   getTurnCooldown():number {

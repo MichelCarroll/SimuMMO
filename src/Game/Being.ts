@@ -10,8 +10,8 @@ export default class Being extends GameObject {
   location:Location;
   health:number;
 
-  constructor() {
-    super();
+  constructor(types?:string[]) {
+    super(types);
     this.health = 100;
     this.inventory = new Inventory();
   }
