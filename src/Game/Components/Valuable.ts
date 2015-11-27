@@ -6,12 +6,16 @@ export default class Valuable implements Component {
 
   basePrice:number;
 
-  constructor(basePrice:number) {
-    this.basePrice = basePrice;
+  constructor() {
+    this.basePrice = 0;
   }
 
   getName():string {
     return 'valuable';
+  }
+
+  setBasePrice(price:number) {
+    this.basePrice = price;
   }
 
   getBasePrice():number {

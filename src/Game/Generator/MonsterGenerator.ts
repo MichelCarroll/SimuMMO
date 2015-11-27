@@ -13,7 +13,9 @@ export default class MonsterGenerator {
     monster.addComponent(new Constitution());
     monster.getComponent<Inventory>('inventory').giveMoney(1);
     let item = new GameObject(['item']);
-    item.addComponent(new Valuable(5));
+    let valuable = new Valuable();
+    valuable.setBasePrice(5);
+    item.addComponent(valuable);
     monster.add(item);
     return monster;
   }
