@@ -27,18 +27,18 @@ export default class Agent {
     if(pool.length) {
       return pool[0].retrieveCommand();
     }
-    
+
     return command;
   }
 
-  processTurn():Command {
+  processTurn(executor:(cmd:Command)=>void) {
     if(this.turnsToWait-- > 0) {
       return new WaitCommand();
     }
 
     let command = this.getCommand();
+    executor(command);
     this.turnsToWait += command.getTurnCooldown();
-    return command;
   }
 
   takeTurn(commandCallback:(cmd:Command)=>void) {

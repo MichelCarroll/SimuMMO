@@ -14,4 +14,8 @@ export default class WaitCommand implements Command {
   getTurnCooldown():number {
     return 0;
   }
+
+  getReward():number {
+    return 0;
+  }
 }

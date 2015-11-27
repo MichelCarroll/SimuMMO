@@ -23,4 +23,8 @@ export default class RestCommand implements Command {
     return 0;
   }
 
+  getReward():number {
+    return 0;
+  }
+
 }

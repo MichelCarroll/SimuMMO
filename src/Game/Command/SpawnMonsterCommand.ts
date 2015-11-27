@@ -1,5 +1,5 @@
 
-import GameObject from '../GameObject'; 
+import GameObject from '../GameObject';
 import MonsterGenerator from '../Generator/MonsterGenerator'
 
 export default class SpawnMonsterCommand {
@@ -21,5 +21,9 @@ export default class SpawnMonsterCommand {
 
   getTurnCooldown():number {
     return 4;
+  }
+
+  getReward():number {
+    return 0;
   }
 }

@@ -32,7 +32,7 @@ export default class Scheduler {
     if(this.position >= this.agents.length) {
       this.position = 0;
     }
-    this.executeCommand(agent.processTurn());
+    agent.processTurn(this.executeCommand);
     return true;
   }
 

@@ -30,4 +30,8 @@ export default class KillCommand implements Command {
     return 0;
   }
 
+  getReward():number {
+    return 0;
+  }
+
 }

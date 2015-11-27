@@ -8,6 +8,7 @@ export default class SellLootCommand implements Command {
 
   self:GameObject;
   target:GameObject;
+  reward:number;
 
   constructor(self:GameObject, target:GameObject) {
     this.self = self;
@@ -15,10 +16,12 @@ export default class SellLootCommand implements Command {
   }
 
   execute() {
+    this.reward = 0;
     this.self.allOfType('item').forEach((item:GameObject) => {
       this.self.remove(item);
       this.target.add(item);
       let basePrice = (<Valuable>item.getComponent('valuable')).getBasePrice();
+      this.reward += basePrice;
       (<Inventory>this.self.getComponent('inventory')).giveMoney(basePrice);
     });
   }
@@ -29,6 +32,10 @@ export default class SellLootCommand implements Command {
 
   getTurnCooldown():number {
     return 0;
+  }
+
+  getReward():number {
+    return this.reward;
   }
 
 }

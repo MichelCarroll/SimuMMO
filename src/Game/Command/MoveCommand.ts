@@ -15,12 +15,16 @@ export default class MoveCommand {
     this.gameObject.getParent().remove(this.gameObject);
     this.location.add(this.gameObject);
   }
- 
+
   describe() {
     return `Being #${this.gameObject.id} moved to #${this.location.id}`;
   }
 
   getTurnCooldown():number {
+    return 0;
+  }
+
+  getReward():number {
     return 0;
   }
 }
