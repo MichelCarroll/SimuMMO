@@ -70,6 +70,10 @@ export default class GameObject  {
     from.empty();
   }
 
+  allWithComponent(name:string):any {
+    return this.contents.filter((object:GameObject) => object.hasComponent(name));
+  }
+
   allOfType(type:string):any {
     return this.contents.filter((object:GameObject) => object.isA(type));
   }

@@ -6,12 +6,16 @@ import {Action} from './Agent/Action';
 
 export default class Agent {
 
-  target:any;
+  target:GameObject;
   turnsToWait:number;
 
   constructor(target:GameObject) {
     this.turnsToWait = 0;
     this.target = target;
+  }
+
+  getState():number[] {
+    return [];
   }
 
   getPossibleActions():Action[] {
@@ -37,8 +41,20 @@ export default class Agent {
     }
 
     let command = this.getCommand();
+    let preState = this.getState();
     executor(command);
+    let postState = this.getState();
+    let reward = command.getReward();
+    this.registerQuality(preState, reward, postState);
     this.turnsToWait += command.getTurnCooldown();
+  }
+
+  registerQuality(preState:number[], reward:number, postState:number[]) {
+      console.log({
+        s: preState,
+        r: reward,
+        p: postState
+      });
   }
 
   takeTurn(commandCallback:(cmd:Command)=>void) {
