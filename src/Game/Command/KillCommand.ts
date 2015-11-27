@@ -1,20 +1,23 @@
 
 import {Command} from '../Command';
-import Being from '../Being';
+import GameObject from '../GameObject';
+import Inventory from '../Components/Inventory';
+import Constitution from '../Components/Constitution';
 
 export default class KillCommand implements Command {
 
-  self:Being;
-  target:Being;
+  self:GameObject;
+  target:GameObject;
 
-  constructor(self:Being, target:Being) {
+  constructor(self:GameObject, target:GameObject) {
     this.self = self;
     this.target = target;
   }
 
   execute() {
-    this.self.injure(10);
-    this.self.getInventory().giveMoney(this.target.getInventory().getMoney());
+    (<Constitution>this.target.getComponent('constitution')).injure(10);
+    let targetMoney = (<Inventory>this.target.getComponent('inventory')).getMoney();
+    (<Inventory>this.self.getComponent('inventory')).giveMoney(targetMoney);
     this.self.takeAll(this.target);
     this.target.getParent().remove(this.target);
   }

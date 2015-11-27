@@ -1,24 +1,23 @@
 
-import Being from '../Being';
-import Location from '../Location';
+import GameObject from '../GameObject';
 
 export default class MoveCommand {
 
-  being:Being;
-  location:Location;
+  gameObject:GameObject;
+  location:GameObject;
 
-  constructor(being:Being, location:Location) {
-    this.being = being;
+  constructor(gameObject:GameObject, location:GameObject) {
+    this.gameObject = gameObject;
     this.location = location;
   }
 
   execute() {
-    this.being.getParent().remove(this.being);
-    this.location.add(this.being);
+    this.gameObject.getParent().remove(this.gameObject);
+    this.location.add(this.gameObject);
   }
-
+ 
   describe() {
-    return `Being #${this.being.id} moved to #${this.location.id}`;
+    return `Being #${this.gameObject.id} moved to #${this.location.id}`;
   }
 
   getTurnCooldown():number {

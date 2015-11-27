@@ -1,15 +1,17 @@
 
 
+import {Component} from '../Component';
 
-import GameObject from './GameObject';
-
-export default class Item extends GameObject {
+export default class Valuable implements Component {
 
   basePrice:number;
 
   constructor(basePrice:number) {
-    super(['item']);
     this.basePrice = basePrice;
+  }
+
+  getName():string {
+    return 'valuable';
   }
 
   getBasePrice():number {

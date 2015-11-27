@@ -1,17 +1,18 @@
 
-import Being from '../Being';
+import GameObject from '../GameObject';
 import {Command} from '../Command';
+import Constitution from '../Components/Constitution';
 
 export default class RestCommand implements Command {
 
-  self:Being;
+  self:GameObject;
 
-  constructor(self:Being) {
+  constructor(self:GameObject) {
     this.self = self;
   }
 
   execute() {
-    this.self.rest(10);
+    (<Constitution>this.self.getComponent('constitution')).rest(10);
   }
 
   describe() {

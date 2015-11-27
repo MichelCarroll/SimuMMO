@@ -1,17 +1,33 @@
 
+import {Component} from './Component';
+
 let nextGlobalId = 1;
 
 export default class GameObject  {
 
   parent:GameObject;
   contents:GameObject[];
+  components:Map<string, Component>;
   id:number;
   types:string[];
 
   constructor(types?:string[]) {
     this.contents = [];
+    this.components = new Map();
     this.id = nextGlobalId++;
     this.types = types || [];
+  }
+
+  addComponent(component:Component) {
+    this.components.set(component.getName(), component);
+  }
+
+  hasComponent(name:string):boolean {
+    return this.components.has(name);
+  }
+
+  getComponent<T>(name:string):T {
+    return <any>this.components.get(name);
   }
 
   getObjectTypes():string[] {

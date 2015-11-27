@@ -1,12 +1,16 @@
 
-import Item from '../Item';
+import {Component} from '../Component';
 
-export default class Inventory {
+export default class Inventory implements Component {
 
   money:number;
 
   constructor() {
     this.money = 0;
+  }
+
+  getName():string {
+    return 'inventory';
   }
 
   giveMoney(quantity:number) {

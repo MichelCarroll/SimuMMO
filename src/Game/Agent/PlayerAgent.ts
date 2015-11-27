@@ -9,13 +9,14 @@ import RestCommand from '../Command/RestCommand';
 import WaitCommand from '../Command/WaitCommand';
 import SellLootCommand from '../Command/SellLootCommand';
 import Agent from '../Agent';
-import Being from '../Being';
+import Constitution from '../Components/Constitution';
+import Referencer from '../Components/Referencer';
 
 export default class PlayerAgent extends Agent {
 
   getCommand():Command {
     let isInTown = this.target.getParent().isA('town');
-    let isInjured = this.target.isInjured();
+    let isInjured = (<Constitution>this.target.getComponent('constitution')).isInjured();
     let monsterIsPresent = !!this.target.getParent().oneOfType('monster');
     let hasLoot = !!this.target.oneOfType('item');
     let shopkeepIsAround = !!this.target.getParent().oneOfType('shopkeep');
@@ -24,7 +25,7 @@ export default class PlayerAgent extends Agent {
     {
       return new MoveCommand(
         this.target,
-        this.target.getParent().adjacentLocations.oneOfType('town')
+        (<Referencer>this.target.getParent().getComponent('referencer')).oneOfType('town')
       );
     }
     else if(isInjured && isInTown)
@@ -42,7 +43,7 @@ export default class PlayerAgent extends Agent {
     {
       return new MoveCommand(
         this.target,
-        this.target.getParent().adjacentLocations.oneOfType('dungeon')
+        (<Referencer>this.target.getParent().getComponent('referencer')).oneOfType('dungeon')
       );
     }
     else if(monsterIsPresent) {
@@ -54,7 +55,7 @@ export default class PlayerAgent extends Agent {
     else if(!monsterIsPresent) {
       return new MoveCommand(
         this.target,
-        this.target.getParent().adjacentLocations.oneOfType('town')
+        (<Referencer>this.target.getParent().getComponent('referencer')).oneOfType('town')
       );
     }
 

@@ -13,7 +13,7 @@ var tsOptions = {
     typescript: require('typescript')
 };
 
-gulp.task('default', ['build']);
+gulp.task('default', ['test', 'watch']);
 gulp.task('test', ['run-test']);
 
 gulp.task('watch', function() {

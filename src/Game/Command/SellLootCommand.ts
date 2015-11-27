@@ -1,23 +1,25 @@
 
 import {Command} from '../Command';
-import Being from '../Being';
-import Item from '../Item';
+import GameObject from '../GameObject';
+import Valuable from '../Components/Valuable';
+import Inventory from '../Components/Inventory';
 
 export default class SellLootCommand implements Command {
 
-  self:Being;
-  target:Being;
+  self:GameObject;
+  target:GameObject;
 
-  constructor(self:Being, target:Being) {
+  constructor(self:GameObject, target:GameObject) {
     this.self = self;
     this.target = target;
   }
 
   execute() {
-    this.self.allOfType('item').forEach((item:Item) => {
+    this.self.allOfType('item').forEach((item:GameObject) => {
       this.self.remove(item);
       this.target.add(item);
-      this.self.getInventory().giveMoney(item.basePrice);
+      let basePrice = (<Valuable>item.getComponent('valuable')).getBasePrice();
+      (<Inventory>this.self.getComponent('inventory')).giveMoney(basePrice);
     });
   }
 
