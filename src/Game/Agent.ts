@@ -2,6 +2,7 @@
 import GameObject from './GameObject';
 import {Command} from './Command';
 import WaitCommand from './Command/WaitCommand';
+import {Action} from './Agent/Action';
 
 export default class Agent {
 
@@ -13,8 +14,21 @@ export default class Agent {
     this.target = target;
   }
 
+  getPossibleActions():Action[] {
+    return [];
+  }
+
   getCommand():Command {
-    return new WaitCommand();
+    let command = new WaitCommand();
+    let pool = this.getPossibleActions().filter((action:Action) => {
+      return action.canExecute();
+    }).sort(() => { return 0.5 - Math.random() });
+
+    if(pool.length) {
+      return pool[0].retrieveCommand();
+    }
+    
+    return command;
   }
 
   processTurn():Command {
