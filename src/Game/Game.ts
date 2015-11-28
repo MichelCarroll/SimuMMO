@@ -2,14 +2,13 @@
 import CommandQueue from './CommandQueue';
 import Scheduler from './Scheduler';
 import WorldGenerator from './Generator/WorldGenerator';
-import World from './World';
 import {Command} from './Command';
 import GameObject from './GameObject';
 
 export default class Game {
 
   commandQueue:CommandQueue;
-  world:World;
+  world:GameObject;
   scheduler:Scheduler;
   player:GameObject;
 
@@ -26,13 +25,15 @@ export default class Game {
   }
 
   run(numTurns:number, onDone:()=>void) {
-    for(let x = 0; x < numTurns; x++) {
+    setImmediate(() => {
       this.scheduler.nextTurn((actionDone:boolean) => {
-          if(x === numTurns) {
+          if(numTurns-- < 0) {
             onDone();
+          } else {
+            this.run(numTurns, onDone)
           }
       });
-    }
+    });
   }
 
   debug() {

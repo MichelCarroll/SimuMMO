@@ -9,6 +9,7 @@ export default class NeuralNetworkModel {
 
   BATCH_SIZE = 10;
   DISCOUNTING_FACTOR = 0.8;
+  EPSILON = 0.25;
 
   pastTrainingFeatures:number[][];
   pastTrainingLabels:number[][];
@@ -51,6 +52,7 @@ export default class NeuralNetworkModel {
         numberOfActivationUnitsL2: 4,
         numberOfNodes: os.cpus().length - 1,
         numberOfExamplesPerNode: 4,
+        verboseMode: false,
         learningRate: 0.5,
         maxCostError: 0.001,
         maxNoOfIterations: 1
@@ -59,21 +61,27 @@ export default class NeuralNetworkModel {
 
   update(done:()=>any) {
     this.neuralNetwork.train(this.getTrainSetup(), (err:any, model:any) => {
+      console.log(err); console.log(model);
       this.model = model;
       done();
     });
   }
 
+  getRandomAction() {
+    return Math.floor(Math.random() * this.numberPossibleActions);
+  }
+
   getBestActionFromState(state:number[], callback:(q:number, action:number)=>void) {
-    if(!this.model) {
-      callback(0, 0);
+    if(!this.model || Math.random() < this.EPSILON) {
+      console.log('doing random action');
+      callback(0, this.getRandomAction());
       return;
     }
 
     var highestQ:number = null;
     var highestAction:number = null;
     for(let x = 0; x < this.numberPossibleActions; x++) {
-      this.neuralNetwork.predict(this.getPredictSetup([state.concat(x)]), (err:number, q:number) => {
+      this.neuralNetwork.predict(this.getPredictSetup([state.concat(x)]), (lol:any, q:number) => {
         if(highestQ === null || q > highestQ) {
           highestQ = q;
           highestAction = x;
@@ -81,6 +89,8 @@ export default class NeuralNetworkModel {
         if(x === this.numberPossibleActions - 1) {
           callback(highestQ, highestAction);
         }
+        console.log('Q: '+ q);
+        console.log('A: '+ x);
       });
     }
   }

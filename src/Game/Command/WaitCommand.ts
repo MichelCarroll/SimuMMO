@@ -16,6 +16,6 @@ export default class WaitCommand implements Command {
   }
 
   getReward():number {
-    return 0;
+    return -1;
   }
 }

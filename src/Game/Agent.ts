@@ -35,7 +35,8 @@ export default class Agent {
 
   processTurn(executor:(cmd:Command)=>void, onDone:()=>void) {
     if(this.turnsToWait-- > 0) {
-      return new WaitCommand();
+      executor(new WaitCommand());
+      return;
     }
 
     let preState = this.getState();
@@ -44,6 +45,11 @@ export default class Agent {
       let postState = this.getState();
       let reward = command.getReward();
       this.turnsToWait += command.getTurnCooldown();
+      console.log({
+        'prestate': preState,
+        'reward': reward,
+        'postState': postState
+      });
       this.brain.addTrainingExample(preState, actionNumber, reward, postState);
       this.brain.update(onDone);
     });

@@ -3,7 +3,6 @@
 import GameObject from '../GameObject';
 import MonsterSpawn from '../Components/MonsterSpawn';
 import Referencer from '../Components/Referencer';
-import World from '../World'
 import Scheduler from '../Scheduler';
 import PlayerAgent from '../Agent/PlayerAgent';
 import SpawnAgent from '../Agent/SpawnAgent';
@@ -35,7 +34,7 @@ export default class WorldGenerator {
     dungeon.add(spawn);
     scheduler.add(new SpawnAgent(spawn));
 
-    let world = new World();
+    let world = new GameObject();
     world.add(dungeon);
     world.add(town);
     (<Referencer>town.getComponent('referencer')).add(dungeon);

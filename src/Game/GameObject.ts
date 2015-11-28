@@ -79,7 +79,7 @@ export default class GameObject  {
   }
 
   oneOfType(type:string):any {
-    return this.contents.find((object:GameObject) => object.isA(type));
+    return this.contents.find((object:GameObject) => { return object.isA(type)});
   }
 
 }

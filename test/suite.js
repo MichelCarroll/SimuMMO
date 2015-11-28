@@ -12,7 +12,7 @@ describe('lol', function() {
   });
 
   it('lol', function() {
-    // game.debug();
+    game.debug();
     should(game.player.getComponent('inventory').money).be.above(0);
   });
 
