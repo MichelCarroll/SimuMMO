@@ -24,16 +24,10 @@ export default class Game {
     this.commandQueue.flush();
   }
 
-  run(numTurns:number, onDone:()=>void) {
-    setImmediate(() => {
-      this.scheduler.nextTurn((actionDone:boolean) => {
-          if(numTurns-- < 0) {
-            onDone();
-          } else {
-            this.run(numTurns, onDone)
-          }
-      });
-    });
+  run(numTurns:number) {
+    for(let x = 0; x < numTurns; x++) {
+      this.scheduler.nextTurn();
+    }
   }
 
   debug() {

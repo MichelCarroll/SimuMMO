@@ -6,9 +6,9 @@ const should = require("should");
 describe('lol', function() {
   let game = null;
 
-  beforeEach(function(done){
+  beforeEach(function(){
     game = new Game();
-    game.run(10000, done);
+    game.run(10000);
   });
 
   it('lol', function() {

@@ -30,23 +30,21 @@ export default class NeuralNetworkModel {
     ];
   }
 
-  update(done:()=>any) {
+  update() {
     let batch = this.getBatch();
     for(let x = 0; x < batch[0].length; x++) {
       this.network.activate(batch[0][x]);
       this.network.propagate(this.LEARNING_RATE, batch[1][x]);
     }
-    done();
   }
 
   getRandomAction() {
     return Math.floor(Math.random() * this.numberPossibleActions);
   }
 
-  getBestActionFromState(state:number[], callback:(q:number, action:number)=>void) {
+  getBestActionFromState(state:number[]):number[] {
     if(Math.random() < this.EPSILON) {
-      callback(0, this.getRandomAction());
-      return;
+      return[0, this.getRandomAction()];
     }
 
     var highestQ:number = null;
@@ -57,17 +55,14 @@ export default class NeuralNetworkModel {
         highestQ = output;
         highestAction = x;
       }
-      if(x === this.numberPossibleActions - 1) {
-        callback(highestQ, highestAction);
-      }
     }
+    return [highestQ, highestAction];
   }
 
   addTrainingExample(state:number[], action:number, reward:number, nextState:number[]) {
-    this.getBestActionFromState(nextState, (qPrime, action) => {
-      this.pastTrainingFeatures.push(state.concat(action));
-      this.pastTrainingLabels.push([reward + this.DISCOUNTING_FACTOR * qPrime]);
-    });
+    let [qPrime] = this.getBestActionFromState(nextState);
+    this.pastTrainingFeatures.push(state.concat(action));
+    this.pastTrainingLabels.push([reward + this.DISCOUNTING_FACTOR * qPrime]);
   }
 
   getRandomSubarray(arr:Array<any>, size:number) {

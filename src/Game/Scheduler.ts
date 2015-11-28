@@ -23,10 +23,9 @@ export default class Scheduler {
     }
   }
 
-  nextTurn(onDone:(actionDone:boolean)=>void) {
+  nextTurn():boolean {
     if(!this.agents.length) {
-      onDone(false);
-      return;
+      return false;
     }
 
     let agent = this.agents[this.position++];
@@ -34,9 +33,7 @@ export default class Scheduler {
       this.position = 0;
     }
 
-    agent.processTurn(this.executeCommand, () => {
-      onDone(true);
-    });
+    return agent.processTurn(this.executeCommand);
   }
 
 }

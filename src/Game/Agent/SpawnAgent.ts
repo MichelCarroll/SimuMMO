@@ -7,15 +7,16 @@ import WaitCommand from '../Command/WaitCommand';
 
 export default class SpawnAgent extends Agent {
 
-  processTurn(executor:(cmd:Command)=>void, onDone:()=>void) {
+  processTurn(executor:(cmd:Command)=>void):boolean {
     if(this.turnsToWait-- > 0) {
       executor(new WaitCommand());
+      return false;
     }
-    else {
-      let command = (new SpawnMonsterAction(this.target)).retrieveCommand();
-      this.turnsToWait += command.getTurnCooldown();
-      executor(command);
-    }
-    onDone();
+
+    let command = (new SpawnMonsterAction(this.target)).retrieveCommand();
+    this.turnsToWait += command.getTurnCooldown();
+    executor(command);
+
+    return true;
   }
 }

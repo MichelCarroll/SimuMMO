@@ -25,30 +25,29 @@ export default class Agent {
     return [];
   }
 
-  fetchCommand(preState:number[], callback:(cmd:Command, action:number)=>void) {
-    this.brain.getBestActionFromState(preState, (q:number, action:number) => {
-      let actionObj = this.getPossibleActions()[action];
-      let command = actionObj.canExecute() ? actionObj.retrieveCommand() : new WaitCommand();
-      callback(command, action);
-    });
+  fetchCommand(preState:number[]):any {
+    let [q, action] = this.brain.getBestActionFromState(preState);
+    let actionObj = this.getPossibleActions()[action];
+    let command = actionObj.canExecute() ? actionObj.retrieveCommand() : new WaitCommand();
+    return [command, action];
   }
 
-  processTurn(executor:(cmd:Command)=>void, onDone:()=>void) {
+  processTurn(executor:(cmd:Command)=>void):boolean {
     if(this.turnsToWait-- > 0) {
       executor(new WaitCommand());
-      return;
+      return false;
     }
 
     let preState = this.getState();
-    this.fetchCommand(preState, (command:Command, actionNumber:number) => {
-      executor(command);
-      let postState = this.getState();
-      let reward = command.getReward();
-      this.turnsToWait += command.getTurnCooldown();
-      // console.log({'prestate': preState, 'reward': reward,'postState': postState});
-      this.brain.addTrainingExample(preState, actionNumber, reward, postState);
-      this.brain.update(onDone);
-    });
+    let [command, actionNumber] = this.fetchCommand(preState);
+    executor(command);
+    let postState = this.getState();
+    let reward = command.getReward();
+    this.turnsToWait += command.getTurnCooldown();
+    // console.log({'prestate': preState, 'reward': reward,'postState': postState});
+    this.brain.addTrainingExample(preState, actionNumber, reward, postState);
+    this.brain.update();
+    return true;
   }
 
   takeTurn(commandCallback:(cmd:Command)=>void) {
