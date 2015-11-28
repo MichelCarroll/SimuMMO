@@ -7,8 +7,8 @@ export default class NeuralNetworkModel {
 
   BATCH_SIZE = 10;
   LEARNING_RATE = 0.3;
-  DISCOUNTING_FACTOR = 0.8;
-  EPSILON = 0.25;
+  DISCOUNTING_FACTOR = 0.9;
+  EPSILON = 0.1;
 
   pastTrainingFeatures:number[][];
   pastTrainingLabels:number[][];
@@ -21,6 +21,14 @@ export default class NeuralNetworkModel {
     this.pastTrainingLabels = [];
     this.network = new synaptic.Architect.Perceptron(sizeOfState+1, 25, 1);
     this.numberPossibleActions = numberPossibleActions;
+  }
+
+  export():any {
+    return this.network.toJSON();
+  }
+
+  import(data:any) {
+    this.network = synaptic.Architect.Network(data);
   }
 
   getBatch():any {

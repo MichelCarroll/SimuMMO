@@ -5,7 +5,7 @@ declare function require(str:string):any;
 import {Command} from '../Command';
 import {Action} from './Action';
 import GameObject from '../GameObject';
-import Agent from '../Agent';
+import SmartAgent from './SmartAgent';
 
 import GotoTownAction from './Action/GotoTownAction';
 import GotoDungeonAction from './Action/GotoDungeonAction';
@@ -18,7 +18,7 @@ import Constitution from '../Components/Constitution';
 import Referencer from '../Components/Referencer';
 import Inventory from '../Components/Inventory';
 
-export default class PlayerAgent extends Agent {
+export default class PlayerAgent extends SmartAgent {
 
   getPossibleActions():Action[] {
     return [

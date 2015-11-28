@@ -1,22 +1,11 @@
 
-import Agent from '../Agent';
 import {Command} from '../Command';
-import {Action} from './Action';
-import SpawnMonsterAction from './Action/SpawnMonsterAction';
-import WaitCommand from '../Command/WaitCommand';
+import SpawnMonsterCommand from '../Command/SpawnMonsterCommand';
+import DumbAgent from './DumbAgent';
 
-export default class SpawnAgent extends Agent {
+export default class SpawnAgent extends DumbAgent {
 
-  processTurn(executor:(cmd:Command)=>void):boolean {
-    if(this.turnsToWait-- > 0) {
-      executor(new WaitCommand());
-      return false;
-    }
-
-    let command = (new SpawnMonsterAction(this.target)).retrieveCommand();
-    this.turnsToWait += command.getTurnCooldown();
-    executor(command);
-
-    return true;
+  getCommand():Command {
+    return new SpawnMonsterCommand(this.target);
   }
 }

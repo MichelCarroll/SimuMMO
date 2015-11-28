@@ -1,5 +1,5 @@
 
-import Agent from './Agent';
+import {Agent} from './Agent';
 import {Command} from './Command';
 
 export default class Scheduler {
