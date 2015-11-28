@@ -3,15 +3,18 @@ import GameObject from './GameObject';
 import {Command} from './Command';
 import WaitCommand from './Command/WaitCommand';
 import {Action} from './Agent/Action';
+import NeuralNetworkModel from './Agent/AI/NeuralNetworkModel';
 
 export default class Agent {
 
   target:GameObject;
   turnsToWait:number;
+  brain:NeuralNetworkModel;
 
   constructor(target:GameObject) {
     this.turnsToWait = 0;
     this.target = target;
+    this.brain = new NeuralNetworkModel(this.getPossibleActions().length);
   }
 
   getState():number[] {
@@ -22,39 +25,28 @@ export default class Agent {
     return [];
   }
 
-  getCommand():Command {
-    let command = new WaitCommand();
-    let pool = this.getPossibleActions().filter((action:Action) => {
-      return action.canExecute();
-    }).sort(() => { return 0.5 - Math.random() });
-
-    if(pool.length) {
-      return pool[0].retrieveCommand();
-    }
-
-    return command;
+  fetchCommand(preState:number[], callback:(cmd:Command, action:number)=>void) {
+    this.brain.getBestActionFromState(preState, (q:number, action:number) => {
+      let actionObj = this.getPossibleActions()[action];
+      let command = actionObj.canExecute() ? actionObj.retrieveCommand() : new WaitCommand();
+      callback(command, action);
+    });
   }
 
-  processTurn(executor:(cmd:Command)=>void) {
+  processTurn(executor:(cmd:Command)=>void, onDone:()=>void) {
     if(this.turnsToWait-- > 0) {
       return new WaitCommand();
     }
 
-    let command = this.getCommand();
     let preState = this.getState();
-    executor(command);
-    let postState = this.getState();
-    let reward = command.getReward();
-    this.registerQuality(preState, reward, postState);
-    this.turnsToWait += command.getTurnCooldown();
-  }
-
-  registerQuality(preState:number[], reward:number, postState:number[]) {
-      console.log({
-        s: preState,
-        r: reward,
-        p: postState
-      });
+    this.fetchCommand(preState, (command:Command, actionNumber:number) => {
+      executor(command);
+      let postState = this.getState();
+      let reward = command.getReward();
+      this.turnsToWait += command.getTurnCooldown();
+      this.brain.addTrainingExample(preState, actionNumber, reward, postState);
+      this.brain.update(onDone);
+    });
   }
 
   takeTurn(commandCallback:(cmd:Command)=>void) {

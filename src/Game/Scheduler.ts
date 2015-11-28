@@ -23,17 +23,20 @@ export default class Scheduler {
     }
   }
 
-  nextTurn():boolean {
+  nextTurn(onDone:(actionDone:boolean)=>void) {
     if(!this.agents.length) {
-      return false;
+      onDone(false);
+      return;
     }
 
     let agent = this.agents[this.position++];
     if(this.position >= this.agents.length) {
       this.position = 0;
     }
-    agent.processTurn(this.executeCommand);
-    return true;
+
+    agent.processTurn(this.executeCommand, () => {
+      onDone(true);
+    });
   }
 
 }
