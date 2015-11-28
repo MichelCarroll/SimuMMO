@@ -1,13 +1,12 @@
 
 declare function require(name:string):any;
 
-const NeuralNetwork = require('neural_network');
-const os = require('os');
-
+const synaptic = require('synaptic');
 
 export default class NeuralNetworkModel {
 
   BATCH_SIZE = 10;
+  LEARNING_RATE = 0.3;
   DISCOUNTING_FACTOR = 0.8;
   EPSILON = 0.25;
 
@@ -15,13 +14,12 @@ export default class NeuralNetworkModel {
   pastTrainingLabels:number[][];
   numberPossibleActions:number;
 
-  neuralNetwork:any;
-  model:any;
+  network:any;
 
-  constructor(numberPossibleActions:number) {
+  constructor(sizeOfState:number, numberPossibleActions:number) {
     this.pastTrainingFeatures = [];
     this.pastTrainingLabels = [];
-    this.neuralNetwork = new NeuralNetwork();
+    this.network = new synaptic.Architect.Perceptron(sizeOfState+1, 25, 1);
     this.numberPossibleActions = numberPossibleActions;
   }
 
@@ -32,39 +30,13 @@ export default class NeuralNetworkModel {
     ];
   }
 
-  getPredictSetup(input:any):any {
-    let batch = this.getBatch();
-    return {
-        model: this.model,
-        inputVector: input,
-        numberOfActivationUnitsL1: 4,
-        numberOfActivationUnitsL2: 4
-    };
-  }
-
-  getTrainSetup():any {
-    let batch = this.getBatch();
-    return {
-        model: this.model,
-        trainingSetInput: batch[0],
-        trainingSetOutput: batch[1],
-        numberOfActivationUnitsL1: 4,
-        numberOfActivationUnitsL2: 4,
-        numberOfNodes: os.cpus().length - 1,
-        numberOfExamplesPerNode: 4,
-        verboseMode: false,
-        learningRate: 0.5,
-        maxCostError: 0.001,
-        maxNoOfIterations: 1
-    };
-  }
-
   update(done:()=>any) {
-    this.neuralNetwork.train(this.getTrainSetup(), (err:any, model:any) => {
-      console.log(err); console.log(model);
-      this.model = model;
-      done();
-    });
+    let batch = this.getBatch();
+    for(let x = 0; x < batch[0].length; x++) {
+      this.network.activate(batch[0][x]);
+      this.network.propagate(this.LEARNING_RATE, batch[1][x]);
+    }
+    done();
   }
 
   getRandomAction() {
@@ -72,8 +44,7 @@ export default class NeuralNetworkModel {
   }
 
   getBestActionFromState(state:number[], callback:(q:number, action:number)=>void) {
-    if(!this.model || Math.random() < this.EPSILON) {
-      console.log('doing random action');
+    if(Math.random() < this.EPSILON) {
       callback(0, this.getRandomAction());
       return;
     }
@@ -81,17 +52,14 @@ export default class NeuralNetworkModel {
     var highestQ:number = null;
     var highestAction:number = null;
     for(let x = 0; x < this.numberPossibleActions; x++) {
-      this.neuralNetwork.predict(this.getPredictSetup([state.concat(x)]), (lol:any, q:number) => {
-        if(highestQ === null || q > highestQ) {
-          highestQ = q;
-          highestAction = x;
-        }
-        if(x === this.numberPossibleActions - 1) {
-          callback(highestQ, highestAction);
-        }
-        console.log('Q: '+ q);
-        console.log('A: '+ x);
-      });
+      let output = this.network.activate(state.concat(x));
+      if(highestQ === null || output > highestQ) {
+        highestQ = output;
+        highestAction = x;
+      }
+      if(x === this.numberPossibleActions - 1) {
+        callback(highestQ, highestAction);
+      }
     }
   }
 

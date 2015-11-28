@@ -14,7 +14,7 @@ export default class Agent {
   constructor(target:GameObject) {
     this.turnsToWait = 0;
     this.target = target;
-    this.brain = new NeuralNetworkModel(this.getPossibleActions().length);
+    this.brain = new NeuralNetworkModel(this.getState().length, this.getPossibleActions().length);
   }
 
   getState():number[] {
@@ -45,11 +45,7 @@ export default class Agent {
       let postState = this.getState();
       let reward = command.getReward();
       this.turnsToWait += command.getTurnCooldown();
-      console.log({
-        'prestate': preState,
-        'reward': reward,
-        'postState': postState
-      });
+      // console.log({'prestate': preState, 'reward': reward,'postState': postState});
       this.brain.addTrainingExample(preState, actionNumber, reward, postState);
       this.brain.update(onDone);
     });

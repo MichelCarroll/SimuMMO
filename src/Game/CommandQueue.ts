@@ -19,7 +19,7 @@ export default class CommandQueue {
       let nextCommand:Command;
       while(nextCommand = this.getNextCommand()) {
         nextCommand.execute();
-        console.log(nextCommand.describe());
+        //console.log(nextCommand.describe());
       }
     }
 

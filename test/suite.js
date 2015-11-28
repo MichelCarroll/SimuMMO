@@ -8,7 +8,7 @@ describe('lol', function() {
 
   beforeEach(function(done){
     game = new Game();
-    game.run(100, done);
+    game.run(10000, done);
   });
 
   it('lol', function() {
