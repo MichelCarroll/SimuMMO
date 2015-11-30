@@ -1,0 +1,44 @@
+#!/usr/bin/env node
+
+var Game = require('./dist/game/Game/Game.js').default;
+var inquirer = require('inquirer');
+
+var game = new Game();
+
+var processAction = function() {
+  inquirer.prompt({
+      type: "list",
+      name: "action",
+      message: "What do you want to do?",
+      choices: [ "Wait", "Exit" ]
+    },
+    function(answers) {
+      switch(answers.action) {
+        case 'Wait':
+          processWait(function() {
+            setTimeout(processAction, 0);
+          });
+          break;
+        case 'Exit':
+         break;
+      }
+    }
+  );
+};
+
+var processWait = function(done) {
+  inquirer.prompt({
+      type: "input",
+      name: "time",
+      message: "How long do you want to wait for?",
+      default: 1,
+      filter: Number
+    },
+    function(answers) {
+      game.run(answers.input);
+      done();
+    }
+  );
+}
+
+processAction();
