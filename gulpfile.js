@@ -54,13 +54,14 @@ gulp.task('run-test', ['build', 'build-tests'], function () {
 });
 
 gulp.task('run-trainer', ['build'], function() {
-  var agentName = argv.output || 'agent_'+Math.floor(Date.now() / 1000);
+  var agentName = argv.output || 'debugging/agent_'+Math.floor(Date.now() / 1000);
   var agentFile = './agents/'+agentName;
   var trainingProgram = argv.trainingProgram || 'default';
+  var iterations = argv.iterations || 10000;
   var Game = require('./dist/game/Game/Game.js').default;
 
   var game = new Game({training: trainingProgram});
-  game.run(5000);
+  game.run(iterations);
   var exportData = game.exportPlayerAgentBrain();
   fs.writeFileSync(agentFile, JSON.stringify(exportData));
 });

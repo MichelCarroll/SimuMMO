@@ -1,4 +1,4 @@
-agents/*
+agents/debugging/*
 node_modules
 dist/*
 tmp

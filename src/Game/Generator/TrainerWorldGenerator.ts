@@ -9,9 +9,9 @@ import SpawnAgent from '../Agent/SpawnAgent';
 import MonsterGenerator from './MonsterGenerator';
 import PlayerGenerator from './PlayerGenerator';
 
-export default class WorldGenerator {
+export default class TrainerWorldGenerator {
 
-  createLocation(type:string):GameObject {
+  private createLocation(type:string):GameObject {
     let location = new GameObject([type]);
     location.addComponent(new Referencer());
     return location;
@@ -25,7 +25,6 @@ export default class WorldGenerator {
     town.add(shopkeep);
     let playerAgent = new PlayerAgent(player);
     scheduler.add(playerAgent);
-
 
     let dungeon = this.createLocation('dungeon');
     let monster = (new MonsterGenerator()).generate();
