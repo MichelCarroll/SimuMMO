@@ -4,19 +4,19 @@ import Scheduler from './Scheduler';
 import WorldGenerator from './Generator/WorldGenerator';
 import {Command} from './Command';
 import GameObject from './GameObject';
+import PlayerAgent from './Agent/PlayerAgent';
 
 export default class Game {
 
   commandQueue:CommandQueue;
   world:GameObject;
   scheduler:Scheduler;
-  player:GameObject;
+  playerAgent:PlayerAgent;
 
   constructor() {
     this.commandQueue = new CommandQueue();
     this.scheduler = new Scheduler(this.executeCommand.bind(this));
-    this.world = (new WorldGenerator()).generate(this.scheduler);
-    this.player = this.world.oneOfType('town').oneOfType('player');
+    this.playerAgent = (new WorldGenerator()).generate(this.scheduler);
   }
 
   executeCommand(command:Command) {
@@ -28,6 +28,10 @@ export default class Game {
     for(let x = 0; x < numTurns; x++) {
       this.scheduler.nextTurn();
     }
+  }
+
+  exportPlayerAgentBrain():any {
+    return this.playerAgent.exportBrain();
   }
 
   debug() {

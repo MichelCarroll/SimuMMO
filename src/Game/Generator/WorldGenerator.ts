@@ -17,13 +17,14 @@ export default class WorldGenerator {
     return location;
   }
 
-  generate(scheduler:Scheduler) {
+  generate(scheduler:Scheduler):PlayerAgent {
     let town = this.createLocation('town');
     let player = (new PlayerGenerator()).generate();
     let shopkeep = new GameObject(['shopkeep']);
     town.add(player);
     town.add(shopkeep);
-    scheduler.add(new PlayerAgent(player));
+    let playerAgent = new PlayerAgent(player);
+    scheduler.add(playerAgent);
 
 
     let dungeon = this.createLocation('dungeon');
@@ -40,7 +41,7 @@ export default class WorldGenerator {
     (<Referencer>town.getComponent('referencer')).add(dungeon);
     (<Referencer>dungeon.getComponent('referencer')).add(town);
 
-    return world;
+    return playerAgent;
   }
 
 }

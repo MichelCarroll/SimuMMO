@@ -8,10 +8,10 @@ export default class NeuralNetworkModel {
   BATCH_SIZE = 100;
   LEARNING_RATE = 0.3;
   DISCOUNTING_FACTOR = 0.8;
-  EPSILON = 1;
+  EPSILON = 0.2;
 
   pastTrainingFeatures:number[][];
-  pastTrainingLabels:number[][];
+  pastTrainingLabels:number[];
   numberPossibleActions:number;
 
   network:any;
@@ -20,7 +20,7 @@ export default class NeuralNetworkModel {
     this.pastTrainingFeatures = [];
     this.pastTrainingLabels = [];
     let sizeInputs = sizeOfState + numberPossibleActions - 1;
-    this.network = new synaptic.Architect.Perceptron(sizeInputs, 25, 1);
+    this.network = new synaptic.Architect.Perceptron(sizeInputs, sizeInputs, 1);
     this.numberPossibleActions = numberPossibleActions;
   }
 
@@ -55,17 +55,21 @@ export default class NeuralNetworkModel {
     ];
   }
 
+  normalizeReward(reward:number) {
+    return 1 / (1 + Math.exp(-reward));
+  }
+
   update() {
     let batch = this.getBatch();
     for(let x = 0; x < batch[0].length; x++) {
       this.network.activate(batch[0][x]);
-      this.network.propagate(this.LEARNING_RATE, batch[1][x]);
+      this.network.propagate(this.LEARNING_RATE, [this.normalizeReward(batch[1][x])]);
     }
 
-    console.log({
-      x: JSON.stringify(this.pastTrainingFeatures),
-      y: JSON.stringify(this.pastTrainingLabels)
-    });
+    // console.log({
+    //   x: JSON.stringify(this.pastTrainingFeatures),
+    //   y: JSON.stringify(this.pastTrainingLabels)
+    // });
   }
 
   getRandomAction() {
@@ -111,13 +115,7 @@ export default class NeuralNetworkModel {
   addTrainingExample(state:number[], action:number, reward:number, nextState:number[]) {
     let [qPrime] = this.getBestActionFromState(nextState, false);
     this.pastTrainingFeatures.push(this.stateActionToInput(state, action));
-    console.log({
-      x: this.stateActionToInput(state, action),
-      y: reward + this.DISCOUNTING_FACTOR * qPrime,
-      r: reward,
-      disc: this.DISCOUNTING_FACTOR * qPrime
-    });
-    this.pastTrainingLabels.push([reward + this.DISCOUNTING_FACTOR * qPrime]);
+    this.pastTrainingLabels.push(reward + this.DISCOUNTING_FACTOR * qPrime);
     // console.log({
     //   'state': state,
     //   'action': action,

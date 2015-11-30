@@ -25,6 +25,6 @@ export default class MoveCommand {
   }
 
   getReward():number {
-    return 1;
+    return 0;
   }
 }
