@@ -87,13 +87,13 @@ export default class NeuralNetworkModel {
   getBestActionFromState(state:number[], useEpsilon:boolean):number[] {
     if(useEpsilon && Math.random() < this.EPSILON) {
       let action = this.getRandomAction();
-      console.log('rand action: '+action);
+      // console.log('rand action: '+action);
       return[0, action];
     }
 
     var highestQ:number = null;
     var highestAction:number = null;
-    console.log('state: '+ state);
+    // console.log('state: '+ state);
     for(let x = 0; x < this.numberPossibleActions; x++) {
       let output = this.network.activate(this.stateActionToInput(state, x))[0];
       // console.log({
@@ -105,10 +105,10 @@ export default class NeuralNetworkModel {
         highestAction = x;
       }
     }
-    console.log({
-      'highestQ': highestQ,
-      'highestAction': highestAction
-    });
+    // console.log({
+    //   'highestQ': highestQ,
+    //   'highestAction': highestAction
+    // });
     return [highestQ, highestAction];
   }
 

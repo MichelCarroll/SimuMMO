@@ -1,8 +1,10 @@
 const gulp = require('gulp');
+const fs = require('fs');
 const babel = require('gulp-babel');
 const mocha = require('gulp-mocha');
 const clean = require('gulp-clean');
 const watch = require('gulp-watch');
+const argv = require('yargs').argv;
 const ts = require('gulp-typescript');
 
 var tsOptions = {
@@ -49,4 +51,16 @@ gulp.task('build-tests', ['clean-test-build'], function() {
 gulp.task('run-test', ['build', 'build-tests'], function () {
   return gulp.src('dist/test/suite.js', {read: false})
     .pipe(mocha({reporter: 'nyan'}));
+});
+
+gulp.task('run-trainer', ['build'], function() {
+  var agentName = argv.output || 'agent_'+Math.floor(Date.now() / 1000);
+  var agentFile = './agents/'+agentName;
+  var trainingProgram = argv.trainingProgram || 'default';
+  var Game = require('./dist/game/Game/Game.js').default;
+
+  var game = new Game({training: trainingProgram});
+  game.run(5000);
+  var exportData = game.exportPlayerAgentBrain();
+  fs.writeFileSync(agentFile, JSON.stringify(exportData));
 });
