@@ -2,6 +2,7 @@
 import CommandQueue from './CommandQueue';
 import Scheduler from './Scheduler';
 import TrainerWorldGenerator from './Generator/TrainerWorldGenerator';
+import WorldGenerator from './Generator/WorldGenerator';
 import {Command} from './Command';
 import GameObject from './GameObject';
 import PlayerAgent from './Agent/PlayerAgent';
@@ -13,10 +14,19 @@ export default class Game {
   scheduler:Scheduler;
   playerAgent:PlayerAgent;
 
-  constructor(options:any) {
+  constructor(options:any = {}) {
     this.commandQueue = new CommandQueue();
     this.scheduler = new Scheduler(this.executeCommand.bind(this));
-    this.playerAgent = (new TrainerWorldGenerator()).generate(this.scheduler);
+
+    if(options.training) {
+        this.playerAgent = (new TrainerWorldGenerator()).generate(this.scheduler);
+    } else {
+        this.world = (new WorldGenerator()).generate(this.scheduler);
+    }
+  }
+
+  getWorld():GameObject {
+    return this.world;
   }
 
   executeCommand(command:Command) {
