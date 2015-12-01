@@ -29,6 +29,10 @@ export default class Game {
     return this.world;
   }
 
+  getCommandQueue():CommandQueue {
+    return this.commandQueue;
+  }
+
   executeCommand(command:Command) {
     this.commandQueue.queue(command);
     this.commandQueue.flush();
@@ -42,10 +46,5 @@ export default class Game {
 
   exportPlayerAgentBrain():any {
     return this.playerAgent.exportBrain();
-  }
-
-  debug() {
-    // console.log(require('util').inspect(this.world, true, 10))
-    this.commandQueue.debug();
   }
 }

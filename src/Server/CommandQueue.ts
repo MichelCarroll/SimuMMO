@@ -1,14 +1,23 @@
 
 import {Command} from './Command';
+import {Emitter} from '../Common/Emitter';
 
-export default class CommandQueue {
+declare interface Subscriber{(data:Object):void};
+
+export default class CommandQueue implements Emitter {
 
     queuePosition:number;
     commandQueue:Command[];
+    subscribers:Subscriber[];
 
     constructor() {
       this.queuePosition = 0;
       this.commandQueue = [];
+      this.subscribers = [];
+    }
+
+    subscribe(subscriber:Subscriber) {
+      this.subscribers.push(subscriber);
     }
 
     queue(command:Command) {
@@ -19,7 +28,9 @@ export default class CommandQueue {
       let nextCommand:Command;
       while(nextCommand = this.getNextCommand()) {
         nextCommand.execute();
-        //console.log(nextCommand.describe());
+        this.subscribers.forEach((subscriber:Subscriber) => {
+          subscriber(nextCommand.describe());
+        });
       }
     }
 

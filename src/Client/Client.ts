@@ -10,6 +10,11 @@ export default class Client {
 
   constructor(game:any) {
     this.game = game;
+    this.game.getCommandQueue().subscribe(this.onCommand.bind(this));
+  }
+
+  onCommand(description:string) {
+    console.log(description);
   }
 
   execute(game:any) {
