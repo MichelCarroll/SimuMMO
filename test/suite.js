@@ -1,6 +1,6 @@
 
 
-import Game from '../game/Game.js'
+import Game from '../server/Game.js'
 const should = require("should");
 
 const synaptic = require('synaptic');

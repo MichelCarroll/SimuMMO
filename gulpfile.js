@@ -27,7 +27,7 @@ gulp.task('clean-build-client', function() {
 });
 
 gulp.task('clean-build-server', function() {
-  return gulp.src('dist/game/*').pipe(clean({force: true}));
+  return gulp.src('dist/server/*').pipe(clean({force: true}));
 });
 
 gulp.task('clean-test-build', function() {
@@ -44,12 +44,12 @@ gulp.task('build-client', ['clean-build-client'], function() {
 });
 
 gulp.task('build-server', ['clean-build-server'], function() {
-  return gulp.src('src/Game/**/*.ts')
+  return gulp.src('src/Server/**/*.ts')
     .pipe(ts(tsOptions))
     .pipe(babel({
         presets: ['es2015']
     }))
-    .pipe(gulp.dest('dist/game'));
+    .pipe(gulp.dest('dist/server'));
 });
 
 gulp.task('build-tests', ['clean-test-build'], function() {
@@ -72,7 +72,7 @@ gulp.task('run-trainer', ['build'], function() {
   var agentFile = './agents/'+agentName;
   var trainingProgram = argv.trainingProgram || 'default';
   var iterations = argv.iterations || 10000;
-  var Game = require('./dist/game/Game.js').default;
+  var Game = require('./dist/server/Game.js').default;
 
   var game = new Game({training: trainingProgram});
   game.run(iterations);
