@@ -8,26 +8,25 @@ import Inventory from '../../Components/Inventory';
 export default class KillMonsterAction implements Action {
 
   target:GameObject;
-  reward:number;
 
   constructor(target:GameObject) {
     this.target = target;
-    this.reward = (<Inventory>this.target.getComponent('inventory')).getMoney();
+  }
+
+  findMonster():GameObject {
+    return this.target.getParent().oneOfType('monster');
   }
 
   canExecute():boolean {
-    return !!this.target.getParent().oneOfType('monster');
+    return !!this.findMonster();
   }
 
   retrieveCommand():Command {
-    return new KillCommand(
-      this.target,
-      this.target.getParent().oneOfType('monster')
-    );
+    return new KillCommand( this.target, this.findMonster() );
   }
 
   getReward():number {
-    return this.reward;
+    return 10;
   }
 
   toString():string {

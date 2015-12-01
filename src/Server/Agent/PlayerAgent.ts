@@ -40,12 +40,12 @@ export default class PlayerAgent extends SmartAgent {
     return (<Inventory>this.target.getComponent('inventory')).getMoney();
   }
 
-  getState():number[] {
-    return [
-      this.target.getParent().oneOfType('shopkeep') ? 1 : 0,
-      this.target.allWithComponent('valuable').length ? 1 : 0,
-      this.target.getParent().oneOfType('monster') ? 1 : 0
-    ]
+  getState():Object {
+    return {
+      'shopkeep_is_around': this.target.getParent().oneOfType('shopkeep') ? 1 : 0,
+      'have_valuables': this.target.allWithComponent('valuable').length ? 1 : 0,
+      'monster_is_around': this.target.getParent().oneOfType('monster') ? 1 : 0
+    }
   }
 
   getCurrentScore():number {

@@ -3,6 +3,7 @@ import GameObject from '../../Common/GameObject';
 import {Command} from '../Command';
 import {Agent} from '../Agent';
 import WaitCommand from '../Command/WaitCommand';
+import WaitAction from './Action/WaitAction';
 import {Action} from './Action';
 import NeuralNetworkModel from './AI/NeuralNetworkModel';
 
@@ -23,7 +24,7 @@ export default class SmartAgent implements Agent {
     this.lastScore = 0;
     this.cumulativePerformance = new Array(this.PERFORMANCE_MEMORY);
     this.target = target;
-    this.brain = new NeuralNetworkModel(this.getState().length, this.getPossibleActions().length);
+    this.brain = new NeuralNetworkModel(Object.keys(this.getState()).length, this.getPossibleActions().length);
   }
 
   exportBrain():any {
@@ -34,24 +35,28 @@ export default class SmartAgent implements Agent {
     this.brain.import(data);
   }
 
-  getState():number[] {
-    return [];
+  getState():Object {
+    return {};
   }
 
   getPossibleActions():Action[] {
     return [];
   }
 
-  fetchCommand(preState:number[]):any {
-    let [q, actionNumber] = this.brain.getBestActionFromState(preState, true);
+  stateToVector(state:Object):number[] {
+    return Object.keys(state).map((key:string) => state[key]);
+  }
+
+  fetchCommand(preState:Object):any {
+    let [q, actionNumber] = this.brain.getBestActionFromState(this.stateToVector(preState), true);
     let actionObj = this.getPossibleActions()[actionNumber];
-    let command = new WaitCommand();
     if(!actionObj.canExecute()) {
-      console.log(this.target.toString()+' attempted to '+actionObj.toString());
-    } else {
-      command = actionObj.retrieveCommand();
+      let command = new WaitCommand();
+      return [command, actionNumber, actionObj, (new WaitAction(this.target)).getReward()];
+      // console.log(this.target.toString()+' attempted to '+actionObj.toString());
     }
-    return [command, actionNumber, actionObj];
+
+    return [actionObj.retrieveCommand(), actionNumber, actionObj, actionObj.getReward()];
   }
 
   processTurn(executor:(cmd:Command)=>void):boolean {
@@ -63,13 +68,19 @@ export default class SmartAgent implements Agent {
     }
 
     let preState = this.getState();
-    let [command, actionNumber, actionObj] = this.fetchCommand(preState);
+    let [command, actionNumber, actionObj, reward] = this.fetchCommand(preState);
     executor(command);
     let postState = this.getState();
-    let reward = actionObj.getReward();
     this.turnsToWait += command.getTurnCooldown();
-    // console.log({'prestate': preState, 'reward': reward,'postState': postState});
-    this.brain.addTrainingExample(preState, actionNumber, reward, postState);
+    this.brain.addTrainingExample(this.stateToVector(preState), actionNumber, reward, this.stateToVector(postState));
+
+    console.log(JSON.stringify({
+      'prestate': preState,
+      'action': actionObj.toString(),
+      'reward': reward,
+      'poststate': postState
+    },null,4))
+
     this.brain.update();
     this.evaluatePerformance();
     return true;
@@ -80,8 +91,6 @@ export default class SmartAgent implements Agent {
     this.cumulativePerformance.push(currScore - this.lastScore);
     this.cumulativePerformance.splice(0, 1);
     this.lastScore = currScore;
-
-    // console.log('Current Performance: '+this.getMovingAveragePerformance());
   }
 
   getCurrentScore():number {

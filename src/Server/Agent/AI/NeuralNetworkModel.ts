@@ -55,6 +55,10 @@ export default class NeuralNetworkModel {
     ];
   }
 
+  denormalizeReward(q:number) {
+    return -Math.log(1/q - 1);
+  }
+
   normalizeReward(reward:number) {
     return 1 / (1 + Math.exp(-reward));
   }
@@ -98,9 +102,17 @@ export default class NeuralNetworkModel {
   }
 
   addTrainingExample(state:number[], action:number, reward:number, nextState:number[]) {
-    let [qPrime] = this.getBestActionFromState(nextState, false);
+    let [qPrime, highestActionNumber] = this.getBestActionFromState(nextState, false);
     this.pastTrainingFeatures.push(this.stateActionToInput(state, action));
-    this.pastTrainingLabels.push(reward + this.DISCOUNTING_FACTOR * qPrime);
+    this.pastTrainingLabels.push(reward + this.DISCOUNTING_FACTOR * this.denormalizeReward(qPrime));
+
+    console.log({
+      x: this.stateActionToInput(state, action),
+      highestAction: highestActionNumber,
+      qPrime: this.denormalizeReward(qPrime),
+      reward: reward,
+      y: reward + this.DISCOUNTING_FACTOR * this.denormalizeReward(qPrime)
+    });
   }
 
 }
