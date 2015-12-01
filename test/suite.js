@@ -1,6 +1,6 @@
 
 
-import Game from '../game/Server/Game.js'
+import Game from '../game/Server/AgentTrainingGame.js'
 const should = require("should");
 
 const synaptic = require('synaptic');
@@ -9,7 +9,7 @@ describe('lol', function() {
   let game = null;
 
   beforeEach(function(){
-    game = new Game({training: 'default'});
+    game = new Game();
     game.run(10000);
   });
 

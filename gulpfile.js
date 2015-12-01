@@ -57,9 +57,9 @@ gulp.task('run-trainer', ['build'], function() {
   var agentFile = './agents/'+agentName;
   var trainingProgram = argv.trainingProgram || 'default';
   var iterations = argv.iterations || 10000;
-  var Game = require('./dist/game/Server/Game.js').default;
+  var Game = require('./dist/game/Server/AgentTrainingGame.js').default;
 
-  var game = new Game({training: trainingProgram});
+  var game = new Game();
   game.run(iterations);
   var exportData = game.exportPlayerAgentBrain();
   fs.writeFileSync(agentFile, JSON.stringify(exportData));
