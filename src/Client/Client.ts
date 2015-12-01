@@ -2,7 +2,13 @@
 declare function require(name:string):any;
 var inquirer = require('inquirer');
 
+import GameObject from '../Common/GameObject';
+
 export default class Client {
+
+  processAction() {
+
+  }
 
   execute(game:any) {
 
@@ -32,11 +38,11 @@ export default class Client {
       );
     };
 
-    var explodeGOContent = function(object:any) {
+    var explodeGOContent = function(object:GameObject) {
       return object.id+': '+object.types?object.types.join(','):'';
     }
 
-    var processExplore = function(object:any, done:any) {
+    var processExplore = function(object:GameObject, done:any) {
       var contents = object.all();
       var contentsListing:any = [];
 
