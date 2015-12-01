@@ -1,6 +1,6 @@
 
 
-import Game from '../game/Game/Game.js'
+import Game from '../game/Game.js'
 const should = require("should");
 
 const synaptic = require('synaptic');
@@ -9,17 +9,8 @@ describe('lol', function() {
   let game = null;
 
   beforeEach(function(){
-    game = new Game();
+    game = new Game({training: 'default'});
     game.run(10000);
-    let brain = game.exportPlayerAgentBrain();
-    let network = synaptic.Network.fromJSON(brain);
-
-    console.log(network.activate([1,10,0,0,0,0]));
-    console.log(network.activate([1,10,1,0,0,0]));
-    console.log(network.activate([1,10,0,1,0,0]));
-    console.log(network.activate([1,10,0,0,1,0]));
-    console.log(network.activate([1,10,0,0,0,1]));
-
   });
 
   it('lol', function() {

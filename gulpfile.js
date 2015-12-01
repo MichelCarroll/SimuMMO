@@ -22,7 +22,11 @@ gulp.task('watch', function() {
   gulp.watch(['src/**/*.ts', 'test/**/*.js'], ['test']);
 });
 
-gulp.task('clean-build', function() {
+gulp.task('clean-build-client', function() {
+  return gulp.src('dist/client/*').pipe(clean({force: true}));
+});
+
+gulp.task('clean-build-server', function() {
   return gulp.src('dist/game/*').pipe(clean({force: true}));
 });
 
@@ -30,8 +34,17 @@ gulp.task('clean-test-build', function() {
   return gulp.src('dist/test/*').pipe(clean({force: true}));
 });
 
-gulp.task('build', ['clean-build'], function() {
-  return gulp.src('src/**/*.ts')
+gulp.task('build-client', ['clean-build-client'], function() {
+  return gulp.src('src/Client/**/*.ts')
+    .pipe(ts(tsOptions))
+    .pipe(babel({
+        presets: ['es2015']
+    }))
+    .pipe(gulp.dest('dist/client'));
+});
+
+gulp.task('build-server', ['clean-build-server'], function() {
+  return gulp.src('src/Game/**/*.ts')
     .pipe(ts(tsOptions))
     .pipe(babel({
         presets: ['es2015']
@@ -47,6 +60,7 @@ gulp.task('build-tests', ['clean-test-build'], function() {
     .pipe(gulp.dest('dist/test'));
 });
 
+gulp.task('build', ['build-server', 'build-client'], function() {});
 
 gulp.task('run-test', ['build', 'build-tests'], function () {
   return gulp.src('dist/test/suite.js', {read: false})
@@ -58,7 +72,7 @@ gulp.task('run-trainer', ['build'], function() {
   var agentFile = './agents/'+agentName;
   var trainingProgram = argv.trainingProgram || 'default';
   var iterations = argv.iterations || 10000;
-  var Game = require('./dist/game/Game/Game.js').default;
+  var Game = require('./dist/game/Game.js').default;
 
   var game = new Game({training: trainingProgram});
   game.run(iterations);
