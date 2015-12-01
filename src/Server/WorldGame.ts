@@ -8,9 +8,10 @@ export default class WorldGame extends Game {
 
   world:GameObject;
 
-  constructor() {
+  constructor(playerAgentData:any) {
     super();
-    this.world = (new WorldGenerator()).generate(this.scheduler);
+    let generator = new WorldGenerator(this.scheduler, playerAgentData);
+    this.world = generator.generate();
   }
 
   getWorld():GameObject {

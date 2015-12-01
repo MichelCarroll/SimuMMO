@@ -3,4 +3,7 @@
 var Game = require('./dist/game/Server/WorldGame.js').default;
 var Client = require('./dist/game/Client/Client.js').default;
 
-(new Client(new Game())).execute();
+require('fs').readFile('./agents/player', function (err, data) {
+  var playerAgentData = JSON.parse(data);
+  (new Client(new Game(playerAgentData))).execute();
+});

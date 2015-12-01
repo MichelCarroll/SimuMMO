@@ -29,7 +29,7 @@ export default class NeuralNetworkModel {
   }
 
   import(data:any) {
-    this.network = synaptic.Architect.Network(data);
+    this.network = synaptic.Network.fromJSON(data);
   }
 
   getBatch():any {

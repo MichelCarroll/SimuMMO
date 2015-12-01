@@ -9,7 +9,7 @@ export default class Game {
   commandQueue:CommandQueue;
   scheduler:Scheduler;
 
-  constructor(options:any = {}) {
+  constructor() {
     this.commandQueue = new CommandQueue();
     this.scheduler = new Scheduler(this.executeCommand.bind(this));
   }
