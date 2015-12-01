@@ -23,8 +23,4 @@ export default class MoveCommand {
   getTurnCooldown():number {
     return 0;
   }
-
-  getReward():number {
-    return 0;
-  }
 }

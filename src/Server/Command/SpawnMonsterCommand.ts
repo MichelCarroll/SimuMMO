@@ -22,8 +22,4 @@ export default class SpawnMonsterCommand {
   getTurnCooldown():number {
     return 10;
   }
-
-  getReward():number {
-    return 0;
-  }
 }

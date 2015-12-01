@@ -20,4 +20,8 @@ export default class WaitAction implements Action {
     return new WaitCommand();
   }
 
+  getReward():number {
+    return -0.1;
+  }
+
 }

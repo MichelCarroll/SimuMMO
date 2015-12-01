@@ -32,4 +32,8 @@ export default class GotoAction implements Action {
     );
   }
 
+  getReward():number {
+    return 0;
+  }
+
 }

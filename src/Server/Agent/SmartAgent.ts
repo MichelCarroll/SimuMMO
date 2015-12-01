@@ -43,10 +43,10 @@ export default class SmartAgent implements Agent {
   }
 
   fetchCommand(preState:number[]):any {
-    let [q, action] = this.brain.getBestActionFromState(preState, true);
-    let actionObj = this.getPossibleActions()[action];
+    let [q, actionNumber] = this.brain.getBestActionFromState(preState, true);
+    let actionObj = this.getPossibleActions()[actionNumber];
     let command = actionObj.canExecute() ? actionObj.retrieveCommand() : new WaitCommand();
-    return [command, action];
+    return [command, actionNumber, actionObj];
   }
 
   processTurn(executor:(cmd:Command)=>void):boolean {
@@ -58,10 +58,10 @@ export default class SmartAgent implements Agent {
     }
 
     let preState = this.getState();
-    let [command, actionNumber] = this.fetchCommand(preState);
+    let [command, actionNumber, actionObj] = this.fetchCommand(preState);
     executor(command);
     let postState = this.getState();
-    let reward = command.getReward();
+    let reward = actionObj.getReward();
     this.turnsToWait += command.getTurnCooldown();
     // console.log({'prestate': preState, 'reward': reward,'postState': postState});
     this.brain.addTrainingExample(preState, actionNumber, reward, postState);

@@ -50,22 +50,18 @@ export default class Client {
     var contents = object.all();
     var contentsListing:any = [];
 
-    if(!contents.length) {
-      this.showGameObject(object);
-      this.processExplore(object.getParent(), done);
-      return;
-    }
+    this.showGameObject(object);
 
     contentsListing = contents.map((object:GameObject) => object.toString());
-    contentsListing.push('Continue');
     if(object.getParent()) {
       contentsListing.push('Back to Parent');
     }
+    contentsListing.push('Continue');
 
     inquirer.prompt({
         type: "list",
         name: "content",
-        message: "What do you want to explore?",
+        message: "Which content do you want to explore?",
         choices: contentsListing
       },
       (answers:any) => {

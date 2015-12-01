@@ -20,4 +20,8 @@ export default class SpawnMonsterAction implements Action {
     return new SpawnMonsterCommand(this.target);
   }
 
+  getReward():number {
+    return 0;
+  }
+
 }

@@ -20,4 +20,8 @@ export default class GotoAction implements Action {
     return new RestCommand(this.target);
   }
 
+  getReward():number {
+    return -0.1;
+  }
+
 }
