@@ -4,7 +4,7 @@ declare function require(str:string):any;
 
 import {Command} from '../Command';
 import {Action} from './Action';
-import GameObject from '../GameObject';
+import GameObject from '../../Common/GameObject';
 import SmartAgent from './SmartAgent';
 
 import GotoTownAction from './Action/GotoTownAction';

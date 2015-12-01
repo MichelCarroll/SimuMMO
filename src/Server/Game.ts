@@ -4,7 +4,7 @@ import Scheduler from './Scheduler';
 import TrainerWorldGenerator from './Generator/TrainerWorldGenerator';
 import WorldGenerator from './Generator/WorldGenerator';
 import {Command} from './Command';
-import GameObject from './GameObject';
+import GameObject from '../Common/GameObject';
 import PlayerAgent from './Agent/PlayerAgent';
 
 export default class Game {

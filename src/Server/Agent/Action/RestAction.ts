@@ -1,6 +1,6 @@
 
 import {Action} from '../Action'
-import GameObject from '../../GameObject'
+import GameObject from '../../../Common/GameObject';
 import RestCommand from '../../Command/RestCommand';
 import {Command} from '../../Command';
 

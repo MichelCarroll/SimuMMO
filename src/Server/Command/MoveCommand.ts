@@ -1,5 +1,5 @@
 
-import GameObject from '../GameObject';
+import GameObject from '../../Common/GameObject';
 
 export default class MoveCommand {
 

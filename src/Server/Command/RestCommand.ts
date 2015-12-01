@@ -1,5 +1,5 @@
 
-import GameObject from '../GameObject';
+import GameObject from '../../Common/GameObject';
 import {Command} from '../Command';
 import Constitution from '../Components/Constitution';
 

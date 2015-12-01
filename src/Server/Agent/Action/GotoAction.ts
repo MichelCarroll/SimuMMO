@@ -1,6 +1,6 @@
 
 import {Action} from '../Action'
-import GameObject from '../../GameObject'
+import GameObject from '../../../Common/GameObject';
 import {Command} from '../../Command';
 import MoveCommand from '../../Command/MoveCommand';
 import Referencer from '../../Components/Referencer';

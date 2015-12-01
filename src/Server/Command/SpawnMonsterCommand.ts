@@ -1,5 +1,5 @@
 
-import GameObject from '../GameObject';
+import GameObject from '../../Common/GameObject';
 import MonsterGenerator from '../Generator/MonsterGenerator'
 
 export default class SpawnMonsterCommand {

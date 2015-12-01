@@ -1,6 +1,6 @@
 
 
-import GameObject from '../GameObject';
+import GameObject from '../../Common/GameObject'
 import MonsterSpawn from '../Components/MonsterSpawn';
 import Referencer from '../Components/Referencer';
 import Scheduler from '../Scheduler';

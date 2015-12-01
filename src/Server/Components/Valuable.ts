@@ -1,6 +1,6 @@
 
 
-import {Component} from '../Component';
+import {Component} from '../../Common/Component';
 
 export default class Valuable implements Component {
 

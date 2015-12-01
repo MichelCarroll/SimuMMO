@@ -1,6 +1,6 @@
 
 import {Agent} from '../Agent';
-import GameObject from '../GameObject';
+import GameObject from '../../Common/GameObject';
 import {Command} from '../Command';
 import {Action} from './Action';
 import SpawnMonsterAction from './Action/SpawnMonsterAction';

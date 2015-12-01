@@ -1,6 +1,6 @@
 
 import {Command} from '../Command';
-import GameObject from '../GameObject';
+import GameObject from '../../Common/GameObject';
 import Inventory from '../Components/Inventory';
 import Constitution from '../Components/Constitution';
 

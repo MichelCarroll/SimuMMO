@@ -1,6 +1,6 @@
 
-import GameObject from '../GameObject';
-import {Component} from '../Component';
+import GameObject from '../../Common/GameObject';
+import {Component} from '../../Common/Component';
 
 export default class Referencer  extends GameObject implements Component {
 
