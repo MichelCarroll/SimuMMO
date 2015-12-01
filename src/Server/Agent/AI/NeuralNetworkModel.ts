@@ -65,11 +65,6 @@ export default class NeuralNetworkModel {
       this.network.activate(batch[0][x]);
       this.network.propagate(this.LEARNING_RATE, [this.normalizeReward(batch[1][x])]);
     }
-
-    // console.log({
-    //   x: JSON.stringify(this.pastTrainingFeatures),
-    //   y: JSON.stringify(this.pastTrainingLabels)
-    // });
   }
 
   getRandomAction() {
@@ -87,28 +82,18 @@ export default class NeuralNetworkModel {
   getBestActionFromState(state:number[], useEpsilon:boolean):number[] {
     if(useEpsilon && Math.random() < this.EPSILON) {
       let action = this.getRandomAction();
-      // console.log('rand action: '+action);
       return[0, action];
     }
 
     var highestQ:number = null;
     var highestAction:number = null;
-    // console.log('state: '+ state);
     for(let x = 0; x < this.numberPossibleActions; x++) {
       let output = this.network.activate(this.stateActionToInput(state, x))[0];
-      // console.log({
-      //   'action': x,
-      //   'q': output
-      // });
       if(highestQ === null || output > highestQ) {
         highestQ = output;
         highestAction = x;
       }
     }
-    // console.log({
-    //   'highestQ': highestQ,
-    //   'highestAction': highestAction
-    // });
     return [highestQ, highestAction];
   }
 
@@ -116,14 +101,6 @@ export default class NeuralNetworkModel {
     let [qPrime] = this.getBestActionFromState(nextState, false);
     this.pastTrainingFeatures.push(this.stateActionToInput(state, action));
     this.pastTrainingLabels.push(reward + this.DISCOUNTING_FACTOR * qPrime);
-    // console.log({
-    //   'state': state,
-    //   'action': action,
-    //   'reward': reward,
-    //   'nextState': nextState,
-    //   'qPrime': qPrime,
-    //   'label': [reward + this.DISCOUNTING_FACTOR * qPrime]
-    // });
   }
 
 }
