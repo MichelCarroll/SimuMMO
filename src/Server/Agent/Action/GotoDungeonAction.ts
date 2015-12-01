@@ -7,4 +7,8 @@ export default class GotoDungeonAction extends GotoAction {
       return 'dungeon';
     }
 
+    toString():string {
+      return 'Go to the dungeon';
+    }
+
 }

@@ -24,4 +24,8 @@ export default class GotoAction implements Action {
     return -0.1;
   }
 
+  toString():string {
+    return 'Rest';
+  }
+
 }

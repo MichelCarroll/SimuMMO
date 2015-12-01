@@ -64,7 +64,7 @@ export default class GameObject  {
     this.contents.push(object);
   }
 
-  getParent():any {
+  getParent():GameObject {
     return this.parent;
   }
 

@@ -33,4 +33,8 @@ export default class SellLootAction implements Action {
     return this.reward;
   }
 
+  toString():string {
+    return 'Sell loot';
+  }
+
 }

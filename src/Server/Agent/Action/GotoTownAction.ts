@@ -7,4 +7,8 @@ export default class GotoTownAction extends GotoAction {
       return 'town';
     }
 
+    toString():string {
+      return 'Go to town';
+    }
+
 }

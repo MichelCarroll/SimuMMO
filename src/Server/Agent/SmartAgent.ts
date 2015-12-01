@@ -45,7 +45,12 @@ export default class SmartAgent implements Agent {
   fetchCommand(preState:number[]):any {
     let [q, actionNumber] = this.brain.getBestActionFromState(preState, true);
     let actionObj = this.getPossibleActions()[actionNumber];
-    let command = actionObj.canExecute() ? actionObj.retrieveCommand() : new WaitCommand();
+    let command = new WaitCommand();
+    if(!actionObj.canExecute()) {
+      console.log(this.target.toString()+' attempted to '+actionObj.toString());
+    } else {
+      command = actionObj.retrieveCommand();
+    }
     return [command, actionNumber, actionObj];
   }
 

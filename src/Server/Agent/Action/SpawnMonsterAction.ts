@@ -24,4 +24,7 @@ export default class SpawnMonsterAction implements Action {
     return 0;
   }
 
+  toString():string {
+    return 'Spawn a monster';
+  }
 }

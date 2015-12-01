@@ -24,4 +24,8 @@ export default class WaitAction implements Action {
     return -0.1;
   }
 
+  toString():string {
+    return 'Wait';
+  }
+
 }

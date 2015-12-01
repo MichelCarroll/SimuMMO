@@ -8,5 +8,6 @@ export interface Action {
   canExecute():boolean;
   retrieveCommand():Command;
   getReward():number;
+  toString():string;
 
 }

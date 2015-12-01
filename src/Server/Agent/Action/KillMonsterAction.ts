@@ -30,4 +30,7 @@ export default class KillMonsterAction implements Action {
     return this.reward;
   }
 
+  toString():string {
+    return 'Kill a monster';
+  }
 }

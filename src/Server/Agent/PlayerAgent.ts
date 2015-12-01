@@ -43,8 +43,8 @@ export default class PlayerAgent extends SmartAgent {
   getState():number[] {
     return [
       this.target.getParent().isA('town') ? 1 : 0,
-      // this.getTotalMoney(),
-      this.getTotalValuables()
+      this.target.allWithComponent('valuable').length ? 1 : 0,
+      this.target.getParent().oneOfType('monster') ? 1 : 0
     ]
   }
 

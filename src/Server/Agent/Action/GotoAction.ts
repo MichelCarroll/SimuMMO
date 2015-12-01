@@ -36,4 +36,8 @@ export default class GotoAction implements Action {
     return 0;
   }
 
+  toString():string {
+    return 'Go somewhere';
+  }
+
 }
