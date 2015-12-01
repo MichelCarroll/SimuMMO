@@ -1,9 +1,6 @@
 #!/usr/bin/env node
 
-var Game = require('./dist/server/Game.js').default;
-var Client = require('./dist/client/Client.js').default;
+var Game = require('./dist/game/Server/Game.js').default;
+var Client = require('./dist/game/Client/Client.js').default;
 
-var game = new Game();
-var client = new Client();
-
-client.execute(game);
+(new Client(new Game())).execute();

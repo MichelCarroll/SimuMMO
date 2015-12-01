@@ -7,4 +7,7 @@ export default class MonsterSpawn implements Component {
     return 'monster_spawn';
   }
 
+  describe():Object {
+      return {}
+  }
 }

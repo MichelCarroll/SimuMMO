@@ -6,94 +6,94 @@ import GameObject from '../Common/GameObject';
 
 export default class Client {
 
-  processAction() {
+  private game:any;
 
+  constructor(game:any) {
+    this.game = game;
   }
 
   execute(game:any) {
-
-    var processAction = function() {
-      inquirer.prompt({
-          type: "list",
-          name: "action",
-          message: "What do you want to do?",
-          choices: [ "Wait", "Explore", "Exit" ]
-        },
-        function(answers:any) {
-          switch(answers.action) {
-            case 'Explore':
-              processExplore(game.getWorld(), function() {
-                setTimeout(processAction, 0);
-              });
-              break;
-            case 'Wait':
-              processWait(function() {
-                setTimeout(processAction, 0);
-              });
-              break;
-            case 'Exit':
-             break;
-          }
-        }
-      );
-    };
-
-    var explodeGOContent = function(object:GameObject) {
-      return object.id+': '+object.types?object.types.join(','):'';
-    }
-
-    var processExplore = function(object:GameObject, done:any) {
-      var contents = object.all();
-      var contentsListing:any = [];
-
-      if(!contents.length) {
-        console.log(object);
-        processExplore(object.getParent(), done);
-        return;
-      }
-
-      contentsListing = contents.map(explodeGOContent);
-      contentsListing.push('Continue');
-      if(object.getParent()) {
-        contentsListing.push('Back to Parent');
-      }
-
-      inquirer.prompt({
-          type: "list",
-          name: "content",
-          message: "What do you want to explore?",
-          choices: contentsListing
-        },
-        function(answers:any) {
-          var index = contentsListing.indexOf(answers.content);
-          if(index === -1 || answers.content === 'Continue') {
-            done();
-          } else if(answers.content === 'Back to Parent') {
-            processExplore(object.getParent(), done);
-          } else {
-            processExplore(contents[index], done);
-          }
-        }
-      );
-    }
-
-    var processWait = function(done:any) {
-      inquirer.prompt({
-          type: "input",
-          name: "time",
-          message: "How long do you want to wait for?",
-          default: 1,
-          filter: Number
-        },
-        function(answers:any) {
-          game.run(answers.time);
-          done();
-        }
-      );
-    }
-
-    processAction();
+    this.processAction();
   }
 
+  showGameObject(object:GameObject) {
+    console.log(JSON.stringify(object.describe(), null, 4));
+  }
+
+  processAction() {
+    inquirer.prompt({
+        type: "list",
+        name: "action",
+        message: "What do you want to do?",
+        choices: [ "Wait", "Explore", "Exit" ]
+      },
+      (answers:any) => {
+        switch(answers.action) {
+          case 'Explore':
+            this.processExplore(this.game.getWorld(), () =>{
+              setTimeout(this.processAction.bind(this), 0);
+            });
+            break;
+          case 'Wait':
+            this.processWait(() => {
+              setTimeout(this.processAction.bind(this), 0);
+            });
+            break;
+          case 'Exit':
+           break;
+        }
+      }
+    );
+  }
+
+  processExplore(object:GameObject, done:any) {
+    var contents = object.all();
+    var contentsListing:any = [];
+
+    if(!contents.length) {
+      this.showGameObject(object);
+      this.processExplore(object.getParent(), done);
+      return;
+    }
+
+    contentsListing = contents.map((object:GameObject) => object.toString());
+    contentsListing.push('Continue');
+    if(object.getParent()) {
+      contentsListing.push('Back to Parent');
+    }
+
+    inquirer.prompt({
+        type: "list",
+        name: "content",
+        message: "What do you want to explore?",
+        choices: contentsListing
+      },
+      (answers:any) => {
+        var index = contentsListing.indexOf(answers.content);
+        if(index === -1 || answers.content === 'Continue') {
+          done();
+        } else if(answers.content === 'Back to Parent') {
+          this.processExplore(object.getParent(), done);
+        } else {
+          this.processExplore(contents[index], done);
+        }
+      }
+    );
+  }
+
+  processWait(done:any) {
+    inquirer.prompt({
+        type: "input",
+        name: "time",
+        message: "How long do you want to wait for?",
+        default: 1,
+        filter: Number
+      },
+      (answers:any) => {
+        this.game.run(answers.time);
+        done();
+      }
+    );
+  }
 
 }

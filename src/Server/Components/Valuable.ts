@@ -22,4 +22,10 @@ export default class Valuable implements Component {
     return this.basePrice;
   }
 
+  describe():Object {
+      return {
+        price: this.basePrice
+      }
+  }
+
 }

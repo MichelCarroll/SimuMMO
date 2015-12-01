@@ -24,4 +24,10 @@ export default class Constitution implements Component {
   isInjured():boolean {
     return this.health < 50;
   }
+
+  describe():Object {
+      return {
+        health: this.health
+      }
+  }
 }

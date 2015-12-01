@@ -29,4 +29,10 @@ export default class Inventory implements Component {
     this.giveMoney(inventory.getMoney());
     inventory.takeMoney(inventory.getMoney());
   }
+
+  describe():Object {
+      return {
+        money: this.money
+      }
+  }
 }

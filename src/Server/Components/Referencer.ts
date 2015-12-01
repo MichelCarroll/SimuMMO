@@ -11,4 +11,8 @@ export default class Referencer  extends GameObject implements Component {
     getName():string {
       return 'referencer';
     }
+
+    describe():Object {
+        return {}
+    }
 }

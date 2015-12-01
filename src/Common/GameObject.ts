@@ -18,6 +18,27 @@ export default class GameObject  {
     this.types = types || [];
   }
 
+  toString():string {
+    return `#${this.id} ${this.types.join(',')}`;
+  }
+
+  getComponentsDescribe():Object {
+    let ret = {};
+    this.components.forEach((component:Component, key:string) => {
+      ret[key] = component.describe()
+    });
+    return ret;
+  }
+
+  describe():Object {
+    return {
+      id: this.id,
+      types: this.types.join(' '),
+      components: this.getComponentsDescribe(),
+      contents: this.contents.map((content:GameObject) => content.toString())
+    }
+  }
+
   addComponent(component:Component) {
     this.components.set(component.getName(), component);
   }
