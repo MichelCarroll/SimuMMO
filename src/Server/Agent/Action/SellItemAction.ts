@@ -2,10 +2,10 @@
 import {Action} from '../Action'
 import GameObject from '../../../Common/GameObject';
 import {Command} from '../../Command';
-import SellLootCommand from '../../Command/SellLootCommand';
+import SellCommand from '../../Command/SellCommand';
 import Valuable from '../../Components/Valuable';
 
-export default class SellLootAction implements Action {
+export default class SellAction implements Action {
 
   target:GameObject;
   reward:number;
@@ -24,7 +24,7 @@ export default class SellLootAction implements Action {
   }
 
   retrieveCommand():Command {
-    return new SellLootCommand(
+    return new SellCommand(
       this.target,
       this.target.getParent().oneOfType('shopkeep'),
       this.getFirstValuable()

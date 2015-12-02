@@ -11,7 +11,7 @@ import GotoTownAction from './Action/GotoTownAction';
 import GotoDungeonAction from './Action/GotoDungeonAction';
 import RestAction from './Action/RestAction';
 import KillMonsterAction from './Action/KillMonsterAction';
-import SellLootAction from './Action/SellLootAction';
+import SellItemAction from './Action/SellItemAction';
 
 import Valuable from '../Components/Valuable';
 import Constitution from '../Components/Constitution';
@@ -26,7 +26,7 @@ export default class PlayerAgent extends SmartAgent {
       new GotoDungeonAction(this.target),
       new RestAction(this.target),
       new KillMonsterAction(this.target),
-      new SellLootAction(this.target),
+      new SellItemAction(this.target),
     ];
   }
 
