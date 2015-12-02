@@ -25,29 +25,41 @@ export default class WorldGenerator {
     return location;
   }
 
-  generate():GameObject {
-    let town = this.createLocation('town');
+  private createPlayer(town:GameObject) {
     let player = (new PlayerGenerator()).generate();
-    let shopkeep = new GameObject(['shopkeep']);
     town.add(player);
-    town.add(shopkeep);
     let playerAgent = new PlayerAgent(player);
     playerAgent.importBrain(this.playerAgentData);
     this.scheduler.add(playerAgent);
+  }
 
-    let dungeon = this.createLocation('dungeon');
-    let monster = (new MonsterGenerator()).generate();
+  private createSpawner(dungeon:GameObject) {
     let spawn = new GameObject(['spawn']);
     spawn.addComponent(new MonsterSpawn());
-    dungeon.add(monster);
     dungeon.add(spawn);
     this.scheduler.add(new SpawnAgent(spawn));
+  }
+
+  generate(numPlayers:number, numSpawners:number):GameObject {
+    let town = this.createLocation('town');
+    let dungeon = this.createLocation('dungeon');
+
+    let shopkeep = new GameObject(['shopkeep']);
+    town.add(shopkeep);
 
     let world = new GameObject();
     world.add(dungeon);
     world.add(town);
     (<Referencer>town.getComponent('referencer')).add(dungeon);
     (<Referencer>dungeon.getComponent('referencer')).add(town);
+
+    for(let x = 0; x < numSpawners; x++) {
+      this.createSpawner(dungeon);
+    }
+
+    for(let x = 0; x < numPlayers; x++) {
+      this.createPlayer(town);
+    }
 
     return world;
   }

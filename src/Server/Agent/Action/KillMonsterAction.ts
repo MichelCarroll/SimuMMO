@@ -26,7 +26,7 @@ export default class KillMonsterAction implements Action {
   }
 
   getReward():number {
-    return 10;
+    return 5;
   }
 
   toString():string {

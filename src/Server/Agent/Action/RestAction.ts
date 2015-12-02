@@ -21,7 +21,7 @@ export default class GotoAction implements Action {
   }
 
   getReward():number {
-    return -0.1;
+    return 0;
   }
 
   toString():string {

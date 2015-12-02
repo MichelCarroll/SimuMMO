@@ -74,12 +74,12 @@ export default class SmartAgent implements Agent {
     this.turnsToWait += command.getTurnCooldown();
     this.brain.addTrainingExample(this.stateToVector(preState), actionNumber, reward, this.stateToVector(postState));
 
-    console.log(JSON.stringify({
-      'prestate': preState,
-      'action': actionObj.toString(),
-      'reward': reward,
-      'poststate': postState
-    },null,4))
+    // console.log(JSON.stringify({
+    //   'prestate': preState,
+    //   'action': actionObj.toString(),
+    //   'reward': reward,
+    //   'poststate': postState
+    // },null,4))
 
     this.brain.update();
     this.evaluatePerformance();

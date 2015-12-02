@@ -106,13 +106,13 @@ export default class NeuralNetworkModel {
     this.pastTrainingFeatures.push(this.stateActionToInput(state, action));
     this.pastTrainingLabels.push(reward + this.DISCOUNTING_FACTOR * this.denormalizeReward(qPrime));
 
-    console.log({
-      x: this.stateActionToInput(state, action),
-      highestAction: highestActionNumber,
-      qPrime: this.denormalizeReward(qPrime),
-      reward: reward,
-      y: reward + this.DISCOUNTING_FACTOR * this.denormalizeReward(qPrime)
-    });
+    // console.log({
+    //   x: this.stateActionToInput(state, action),
+    //   highestAction: highestActionNumber,
+    //   qPrime: this.denormalizeReward(qPrime),
+    //   reward: reward,
+    //   y: reward + this.DISCOUNTING_FACTOR * this.denormalizeReward(qPrime)
+    // });
   }
 
 }

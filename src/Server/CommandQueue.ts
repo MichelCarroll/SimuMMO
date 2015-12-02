@@ -29,7 +29,8 @@ export default class CommandQueue implements Emitter {
       while(nextCommand = this.getNextCommand()) {
         nextCommand.execute();
         this.subscribers.forEach((subscriber:Subscriber) => {
-          subscriber(nextCommand.describe());
+          let description = nextCommand.describe();
+          description.length && subscriber(description);
         });
       }
     }

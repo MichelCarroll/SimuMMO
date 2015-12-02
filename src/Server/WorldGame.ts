@@ -11,7 +11,7 @@ export default class WorldGame extends Game {
   constructor(playerAgentData:any) {
     super();
     let generator = new WorldGenerator(this.scheduler, playerAgentData);
-    this.world = generator.generate();
+    this.world = generator.generate(20, 20);
   }
 
   getWorld():GameObject {

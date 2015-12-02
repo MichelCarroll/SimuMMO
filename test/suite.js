@@ -1,43 +1,43 @@
 
 const should = require("should");
 const synaptic = require('synaptic');
-// import Game from '../game/Server/AgentTrainingGame.js'
+import Game from '../game/Server/AgentTrainingGame.js'
 
 
 
-require('fs').readFile('./agents/player', function (err, data) {
 
-  var network = synaptic.Network.fromJSON(JSON.parse(data));
-  var trainingData = [
-    [0,0,1,0,0,0,0],
-    [0,0,1,1,0,0,0],
-    [0,0,1,0,1,0,0],
-    [0,0,1,0,0,1,0],
-    [0,0,1,0,0,0,1]
-  ];
 
-  trainingData.forEach((data) => {
-    console.log(network.activate(data));
+describe('lol', function() {
+  let game = null;
+
+  beforeEach(function(){
+    game = new Game();
+    game.run(10000);
   });
+
+  it('lol', function() {
+    // game.getCommandQueue().debug();
+    should(game.playerAgent.target.getComponent('inventory').money).be.above(0);
+  });
+
 });
 
+// require('fs').readFile('./agents/player', function (err, data) {
 //
+//   var network = synaptic.Network.fromJSON(JSON.parse(data));
+//   var trainingData = [
+//     [0,0,1,0,0,0,0],
+//     [0,0,1,1,0,0,0],
+//     [0,0,1,0,1,0,0],
+//     [0,0,1,0,0,1,0],
+//     [0,0,1,0,0,0,1]
+//   ];
 //
-//
-// describe('lol', function() {
-//   let game = null;
-//
-//   beforeEach(function(){
-//     game = new Game();
-//     game.run(10000);
+//   trainingData.forEach((data) => {
+//     console.log(network.activate(data));
 //   });
-//
-//   it('lol', function() {
-//     // game.getCommandQueue().debug();
-//     should(game.playerAgent.target.getComponent('inventory').money).be.above(0);
-//   });
-//
 // });
+
 
 //
 // var trainingData = {
