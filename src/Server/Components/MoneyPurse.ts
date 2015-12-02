@@ -1,6 +1,7 @@
 
 import {Component} from '../../Common/Component';
 import {Event} from '../../Common/Event';
+import LoseMoney from '../Event/LoseMoney';
 import GiveMoney from '../Event/GiveMoney';
 
 export default class MoneyPurse implements Component {
@@ -42,6 +43,9 @@ export default class MoneyPurse implements Component {
     switch(event.getName()) {
       case 'GiveMoney':
         this.money += (<GiveMoney>event).getAmount();
+        break;
+      case 'LoseMoney':
+        this.money -= (<LoseMoney>event).getAmount();
         break;
     }
   }

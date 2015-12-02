@@ -1,32 +1,32 @@
-
 import {Command} from '../Command';
 import GameObject from '../../Common/GameObject';
 import Valuable from '../Components/Valuable';
 import GiveMoney from '../Event/GiveMoney';
+import LoseMoney from '../Event/LoseMoney';
 
-export default class SellLootCommand implements Command {
+export default class SellCommand implements Command {
 
-  self:GameObject;
-  target:GameObject;
+  seller:GameObject;
+  buyer:GameObject;
+  valuable:GameObject;
 
-  constructor(self:GameObject, target:GameObject) {
-    this.self = self;
-    this.target = target;
+  constructor(seller:GameObject, buyer:GameObject, valuable:GameObject) {
+    this.seller = seller;
+    this.buyer = buyer;
+    this.valuable = valuable;
   }
 
   execute() {
-    let moneyChangingHands:number = 0;
-    this.self.allOfType('item').forEach((item:GameObject) => {
-      this.self.remove(item);
-      this.target.add(item);
-      let basePrice = (<Valuable>item.getComponent('valuable')).getBasePrice();
-      moneyChangingHands += basePrice;
-    });
-    this.self.trigger(new GiveMoney(moneyChangingHands));
+    let basePrice = (<Valuable>this.valuable.getComponent('valuable')).getBasePrice();
+    let moneyChangingHands = basePrice;
+    this.seller.remove(this.valuable);
+    this.buyer.add(this.valuable);
+    this.seller.trigger(new GiveMoney(moneyChangingHands));
+    this.buyer.trigger(new LoseMoney(moneyChangingHands));
   }
 
   describe() {
-    return `Player #${this.self.id} sold his loot to Shopkeep #${this.target.id}`;
+    return `Player #${this.seller.id} sold a valuable to Shopkeep #${this.buyer.id}`;
   }
 
   getTurnCooldown():number {

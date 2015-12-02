@@ -96,6 +96,10 @@ export default class GameObject  {
     this.components.forEach((component:Component) => component.onEvent(event));
   }
 
+  oneWithComponent(name:string):any {
+    return this.contents.find((object:GameObject) => object.hasComponent(name));
+  }
+
   allWithComponent(name:string):any {
     return this.contents.filter((object:GameObject) => object.hasComponent(name));
   }

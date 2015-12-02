@@ -12,20 +12,22 @@ export default class SellLootAction implements Action {
 
   constructor(target:GameObject) {
     this.target = target;
-    this.reward = target.allOfType('item').reduce((reward:number, item:GameObject) => {
-      return reward + (<Valuable>item.getComponent('valuable')).getBasePrice();
-    }, 0);
+    this.reward = this.getFirstValuable() ? (<Valuable>this.getFirstValuable().getComponent('valuable')).getBasePrice() : 0;
+  }
+
+  getFirstValuable():GameObject {
+    return this.target.oneWithComponent('valuable');
   }
 
   canExecute():boolean {
-    return !!this.target.getParent().oneOfType('shopkeep')
-      && this.target.allWithComponent('valuable').length > 0;
+    return !!this.target.getParent().oneOfType('shopkeep') && !!this.getFirstValuable();
   }
 
   retrieveCommand():Command {
     return new SellLootCommand(
       this.target,
-      this.target.getParent().oneOfType('shopkeep')
+      this.target.getParent().oneOfType('shopkeep'),
+      this.getFirstValuable()
     );
   }
 
@@ -34,7 +36,7 @@ export default class SellLootAction implements Action {
   }
 
   toString():string {
-    return 'Sell loot';
+    return 'Sold loot';
   }
 
 }
