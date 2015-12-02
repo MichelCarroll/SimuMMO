@@ -94,6 +94,10 @@ export default class GameObject  {
 
   trigger(event:Event) {
     this.components.forEach((component:Component) => component.onEvent(event));
+    switch(event.getName()) {
+      case 'Death':
+        break;
+    }
   }
 
   oneWithComponent(name:string):any {

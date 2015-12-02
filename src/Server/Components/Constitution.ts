@@ -1,12 +1,17 @@
 
 import {Component} from '../../Common/Component';
+import GameObject from '../../Common/GameObject';
 import {Event} from '../../Common/Event';
+import Injury from '../Event/Injury';
+import Death from '../Event/Death';
 
 export default class Constitution implements Component {
 
   health:number;
+  object:GameObject;
 
-  constructor() {
+  constructor(gameObject:GameObject) {
+    this.object = gameObject
     this.health = 100;
   }
 
@@ -22,6 +27,10 @@ export default class Constitution implements Component {
     this.health -= points;
   }
 
+  isDead():boolean {
+    return this.health <= 0;
+  }
+
   isInjured():boolean {
     return this.health < 50;
   }
@@ -32,7 +41,19 @@ export default class Constitution implements Component {
       }
   }
 
-  onEvent(event:Event) {
+  die() {
+    this.object.trigger(new Death());
+  }
 
+  onEvent(event:Event) {
+    switch(event.getName()) {
+      case 'Injury':
+        let wasAlive = this.isDead();
+        this.health -= (<Injury>event).getDamage();
+        if(wasAlive && this.isDead()) {
+          this.die();
+        }
+        break;
+    }
   }
 }

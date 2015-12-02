@@ -4,13 +4,17 @@ import GameObject from '../../../Common/GameObject';
 import {Command} from '../../Command';
 import AttackCommand from '../../Command/AttackCommand';
 import MoneyPurse from '../../Components/MoneyPurse';
+import Constitution from '../../Components/Constitution';
 
 export default class AttackMonsterAction implements Action {
 
   target:GameObject;
+  reward:number;
 
   constructor(target:GameObject) {
     this.target = target;
+    let monster = this.findMonster();
+    this.reward = monster && !(<Constitution>monster.getComponent('constitution')).isDead() ? 1 : 0;
   }
 
   findMonster():GameObject {
@@ -26,10 +30,10 @@ export default class AttackMonsterAction implements Action {
   }
 
   getReward():number {
-    return 5;
+    return this.reward;
   }
 
   toString():string {
-    return 'Kill a monster';
+    return 'Attack a monster';
   }
 }

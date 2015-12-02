@@ -12,6 +12,7 @@ import GotoDungeonAction from './Action/GotoDungeonAction';
 import RestAction from './Action/RestAction';
 import AttackMonsterAction from './Action/AttackMonsterAction';
 import SellItemAction from './Action/SellItemAction';
+import LootMonsterAction from './Action/LootMonsterAction';
 
 import Valuable from '../Components/Valuable';
 import Constitution from '../Components/Constitution';
@@ -27,6 +28,7 @@ export default class PlayerAgent extends SmartAgent {
       new RestAction(this.target),
       new AttackMonsterAction(this.target),
       new SellItemAction(this.target),
+      new LootMonsterAction(this.target)
     ];
   }
 
@@ -40,11 +42,19 @@ export default class PlayerAgent extends SmartAgent {
     return (<MoneyPurse>this.target.getComponent('moneyPurse')).getMoney();
   }
 
+  getFirstMonster(alive:boolean) {
+    return this.target.getParent().allOfType('monster').find((monster:GameObject) => {
+      let isDead = (<Constitution>monster.getComponent('constitution')).isDead();
+      return alive ? !isDead : isDead;
+    })
+  }
+
   getState():Object {
     return {
       'shopkeep_is_around': this.target.getParent().oneOfType('shopkeep') ? 1 : 0,
       'have_valuables': this.target.allWithComponent('valuable').length ? 1 : 0,
-      'monster_is_around': this.target.getParent().oneOfType('monster') ? 1 : 0
+      'live_monster_is_around': this.getFirstMonster(true) ? 1 : 0,
+      'dead_monster_is_around': this.getFirstMonster(false) ? 1 : 0,
     }
   }
 

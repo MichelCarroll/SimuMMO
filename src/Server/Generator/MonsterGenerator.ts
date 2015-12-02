@@ -10,7 +10,7 @@ export default class MonsterGenerator {
   generate() {
     let monster = new GameObject(['monster']);
     monster.addComponent(new MoneyPurse());
-    monster.addComponent(new Constitution());
+    monster.addComponent(new Constitution(monster));
     monster.getComponent<MoneyPurse>('moneyPurse').giveMoney(5);
     let item = new GameObject(['item']);
     let valuable = new Valuable();

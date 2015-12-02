@@ -9,7 +9,7 @@ export default class PlayerGenerator {
   generate() {
     let monster = new GameObject(['player']);
     monster.addComponent(new MoneyPurse());
-    monster.addComponent(new Constitution());
+    monster.addComponent(new Constitution(monster));
     return monster;
   }
 
