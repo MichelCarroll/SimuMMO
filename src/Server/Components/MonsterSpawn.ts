@@ -1,5 +1,6 @@
 
 import {Component} from '../../Common/Component';
+import {Event} from '../../Common/Event';
 
 export default class MonsterSpawn implements Component {
 
@@ -9,5 +10,9 @@ export default class MonsterSpawn implements Component {
 
   describe():Object {
       return {}
+  }
+
+  onEvent(event:Event) {
+
   }
 }

@@ -1,5 +1,6 @@
 
 import {Component} from '../../Common/Component';
+import {Event} from '../../Common/Event';
 
 export default class Constitution implements Component {
 
@@ -29,5 +30,9 @@ export default class Constitution implements Component {
       return {
         health: this.health
       }
+  }
+
+  onEvent(event:Event) {
+
   }
 }

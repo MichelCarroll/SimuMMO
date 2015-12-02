@@ -2,7 +2,7 @@
 import {Command} from '../Command';
 import GameObject from '../../Common/GameObject';
 import Valuable from '../Components/Valuable';
-import MoneyPurse from '../Components/MoneyPurse';
+import GiveMoney from '../Event/GiveMoney';
 
 export default class SellLootCommand implements Command {
 
@@ -15,12 +15,14 @@ export default class SellLootCommand implements Command {
   }
 
   execute() {
+    let moneyChangingHands:number = 0;
     this.self.allOfType('item').forEach((item:GameObject) => {
       this.self.remove(item);
       this.target.add(item);
       let basePrice = (<Valuable>item.getComponent('valuable')).getBasePrice();
-      (<MoneyPurse>this.self.getComponent('moneyPurse')).giveMoney(basePrice);
+      moneyChangingHands += basePrice;
     });
+    this.self.trigger(new GiveMoney(moneyChangingHands));
   }
 
   describe() {

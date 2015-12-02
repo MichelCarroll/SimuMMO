@@ -1,5 +1,6 @@
 
 import {Component} from './Component';
+import {Event} from './Event';
 
 let nextGlobalId = 1;
 
@@ -89,6 +90,10 @@ export default class GameObject  {
       this.add(go);
     });
     from.empty();
+  }
+
+  trigger(event:Event) {
+    this.components.forEach((component:Component) => component.onEvent(event));
   }
 
   allWithComponent(name:string):any {

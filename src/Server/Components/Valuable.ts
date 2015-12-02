@@ -1,6 +1,7 @@
 
 
 import {Component} from '../../Common/Component';
+import {Event} from '../../Common/Event';
 
 export default class Valuable implements Component {
 
@@ -26,6 +27,10 @@ export default class Valuable implements Component {
       return {
         price: this.basePrice
       }
+  }
+
+  onEvent(event:Event) {
+
   }
 
 }
