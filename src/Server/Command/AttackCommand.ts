@@ -4,7 +4,7 @@ import GameObject from '../../Common/GameObject';
 import MoneyPurse from '../Components/MoneyPurse';
 import Constitution from '../Components/Constitution';
 
-export default class KillCommand implements Command {
+export default class AttackCommand implements Command {
 
   self:GameObject;
   target:GameObject;

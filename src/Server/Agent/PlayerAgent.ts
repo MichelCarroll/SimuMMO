@@ -10,7 +10,7 @@ import SmartAgent from './SmartAgent';
 import GotoTownAction from './Action/GotoTownAction';
 import GotoDungeonAction from './Action/GotoDungeonAction';
 import RestAction from './Action/RestAction';
-import KillMonsterAction from './Action/KillMonsterAction';
+import AttackMonsterAction from './Action/AttackMonsterAction';
 import SellItemAction from './Action/SellItemAction';
 
 import Valuable from '../Components/Valuable';
@@ -25,7 +25,7 @@ export default class PlayerAgent extends SmartAgent {
       new GotoTownAction(this.target),
       new GotoDungeonAction(this.target),
       new RestAction(this.target),
-      new KillMonsterAction(this.target),
+      new AttackMonsterAction(this.target),
       new SellItemAction(this.target),
     ];
   }

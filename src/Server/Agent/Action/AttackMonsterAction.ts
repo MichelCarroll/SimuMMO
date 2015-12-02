@@ -2,10 +2,10 @@
 import {Action} from '../Action'
 import GameObject from '../../../Common/GameObject';
 import {Command} from '../../Command';
-import KillCommand from '../../Command/KillCommand';
+import AttackCommand from '../../Command/AttackCommand';
 import MoneyPurse from '../../Components/MoneyPurse';
 
-export default class KillMonsterAction implements Action {
+export default class AttackMonsterAction implements Action {
 
   target:GameObject;
 
@@ -22,7 +22,7 @@ export default class KillMonsterAction implements Action {
   }
 
   retrieveCommand():Command {
-    return new KillCommand( this.target, this.findMonster() );
+    return new AttackCommand( this.target, this.findMonster() );
   }
 
   getReward():number {
