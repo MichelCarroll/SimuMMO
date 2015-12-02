@@ -3,7 +3,7 @@ import {Action} from '../Action'
 import GameObject from '../../../Common/GameObject';
 import {Command} from '../../Command';
 import KillCommand from '../../Command/KillCommand';
-import Inventory from '../../Components/Inventory';
+import MoneyPurse from '../../Components/MoneyPurse';
 
 export default class KillMonsterAction implements Action {
 

@@ -16,7 +16,7 @@ import SellLootAction from './Action/SellLootAction';
 import Valuable from '../Components/Valuable';
 import Constitution from '../Components/Constitution';
 import Referencer from '../Components/Referencer';
-import Inventory from '../Components/Inventory';
+import MoneyPurse from '../Components/MoneyPurse';
 
 export default class PlayerAgent extends SmartAgent {
 
@@ -37,7 +37,7 @@ export default class PlayerAgent extends SmartAgent {
   }
 
   getTotalMoney():number {
-    return (<Inventory>this.target.getComponent('inventory')).getMoney();
+    return (<MoneyPurse>this.target.getComponent('moneyPurse')).getMoney();
   }
 
   getState():Object {

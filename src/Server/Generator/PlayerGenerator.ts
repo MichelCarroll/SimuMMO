@@ -1,14 +1,14 @@
 
 
 import GameObject from '../../Common/GameObject'
-import Inventory from '../Components/Inventory';
+import MoneyPurse from '../Components/MoneyPurse';
 import Constitution from '../Components/Constitution';
 
 export default class PlayerGenerator {
 
   generate() {
     let monster = new GameObject(['player']);
-    monster.addComponent(new Inventory());
+    monster.addComponent(new MoneyPurse());
     monster.addComponent(new Constitution());
     return monster;
   }

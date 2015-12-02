@@ -2,16 +2,16 @@
 
 import GameObject from '../../Common/GameObject'
 import Valuable from '../Components/Valuable';
-import Inventory from '../Components/Inventory';
+import MoneyPurse from '../Components/MoneyPurse';
 import Constitution from '../Components/Constitution';
 
 export default class MonsterGenerator {
 
   generate() {
     let monster = new GameObject(['monster']);
-    monster.addComponent(new Inventory());
+    monster.addComponent(new MoneyPurse());
     monster.addComponent(new Constitution());
-    monster.getComponent<Inventory>('inventory').giveMoney(5);
+    monster.getComponent<MoneyPurse>('moneyPurse').giveMoney(5);
     let item = new GameObject(['item']);
     let valuable = new Valuable();
     valuable.setBasePrice(5);

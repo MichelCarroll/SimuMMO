@@ -1,7 +1,7 @@
 
 import {Command} from '../Command';
 import GameObject from '../../Common/GameObject';
-import Inventory from '../Components/Inventory';
+import MoneyPurse from '../Components/MoneyPurse';
 import Constitution from '../Components/Constitution';
 
 export default class KillCommand implements Command {
@@ -18,8 +18,8 @@ export default class KillCommand implements Command {
 
   execute() {
     (<Constitution>this.target.getComponent('constitution')).injure(10);
-    (<Inventory>this.self.getComponent('inventory')).giveMoney(
-      (<Inventory>this.target.getComponent('inventory')).getMoney()
+    (<MoneyPurse>this.self.getComponent('moneyPurse')).giveMoney(
+      (<MoneyPurse>this.target.getComponent('moneyPurse')).getMoney()
     );
     this.self.takeAll(this.target);
     this.target.getParent().remove(this.target);

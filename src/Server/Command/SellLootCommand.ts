@@ -2,7 +2,7 @@
 import {Command} from '../Command';
 import GameObject from '../../Common/GameObject';
 import Valuable from '../Components/Valuable';
-import Inventory from '../Components/Inventory';
+import MoneyPurse from '../Components/MoneyPurse';
 
 export default class SellLootCommand implements Command {
 
@@ -19,7 +19,7 @@ export default class SellLootCommand implements Command {
       this.self.remove(item);
       this.target.add(item);
       let basePrice = (<Valuable>item.getComponent('valuable')).getBasePrice();
-      (<Inventory>this.self.getComponent('inventory')).giveMoney(basePrice);
+      (<MoneyPurse>this.self.getComponent('moneyPurse')).giveMoney(basePrice);
     });
   }
 

@@ -1,7 +1,7 @@
 
 import {Component} from '../../Common/Component';
 
-export default class Inventory implements Component {
+export default class MoneyPurse implements Component {
 
   money:number;
 
@@ -10,7 +10,7 @@ export default class Inventory implements Component {
   }
 
   getName():string {
-    return 'inventory';
+    return 'moneyPurse';
   }
 
   giveMoney(quantity:number) {
@@ -25,9 +25,9 @@ export default class Inventory implements Component {
     return this.money;
   }
 
-  transferTo(inventory:Inventory) {
-    this.giveMoney(inventory.getMoney());
-    inventory.takeMoney(inventory.getMoney());
+  transferTo(moneyPurse:MoneyPurse) {
+    this.giveMoney(moneyPurse.getMoney());
+    moneyPurse.takeMoney(moneyPurse.getMoney());
   }
 
   describe():Object {

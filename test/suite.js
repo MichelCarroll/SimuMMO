@@ -17,7 +17,7 @@ describe('lol', function() {
 
   it('lol', function() {
     // game.getCommandQueue().debug();
-    should(game.playerAgent.target.getComponent('inventory').money).be.above(0);
+    should(game.playerAgent.target.getComponent('moneyPurse').money).be.above(0);
   });
 
 });
